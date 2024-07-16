@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Components", "src\FormBuilder.Components\FormBuilder.Components.csproj", "{898F28F0-39C1-42C5-AD09-7117C02DFAD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder", "src\FormBuilder\FormBuilder.csproj", "{898F28F0-39C1-42C5-AD09-7117C02DFAD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.DesignerApp", "src\FormBuilder.DesignerApp\FormBuilder.DesignerApp.csproj", "{87D67F8D-1F97-4E3D-BA6D-268ADCA83F00}"
 EndProject
