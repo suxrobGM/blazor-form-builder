@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace FormBuilderComponents;
+namespace FormBuilder.Components;
 
 public partial class FormBuilder : ComponentBase
 {

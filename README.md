@@ -1,1 +1,1 @@
-# blazor-form-designer
+# Blazor Form Builder
