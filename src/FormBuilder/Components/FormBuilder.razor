@@ -2,13 +2,13 @@
 
 <RadzenRow class="vh-100">
     <RadzenColumn Size="8" SizeMD="9" SizeLG="10">
-        <DropZone1 class="min-vh-100" TData="Action" Drop="HandleDropField" Zone="FieldsZone">
+        <DropZone class="min-vh-100" TData="Action" Drop="HandleDropField" Zone="FieldsZone">
             <ul class="list-group">
                 @foreach (var field in _formDefinition.Fields)
                 {
                     <Dragable Data="field" Zone="FieldItemZone">
                         <li class="list-group-item" onclick="@(() => SelectField(field))">
-                            <DropZone1 TData="Field" Zone="FieldItemZone" Drop="@((droppingField) => SwapFields(field, droppingField))">
+                            <DropZone TData="Field" Zone="FieldItemZone" Drop="@((droppingField) => SwapFields(field, droppingField))">
                                 <FormField Field="field" Disabled="true">
                                     <Append>
                                         <RadzenButton
@@ -19,12 +19,12 @@
                                         </RadzenButton>
                                     </Append>
                                 </FormField>
-                            </DropZone1>
+                            </DropZone>
                         </li>
                     </Dragable>
                 }
             </ul>
-        </DropZone1>
+        </DropZone>
     </RadzenColumn>
     <RadzenColumn Class="border bg-light px-1" Size="4" SizeMD="3" SizeLG="2">
         <RadzenStack Class="border-bottom mt-2 pb-2" Orientation="Orientation.Vertical">

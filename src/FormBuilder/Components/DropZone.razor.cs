@@ -8,7 +8,7 @@ namespace FormBuilder.Components;
 /// Wrap any component with this component to make it a dropzone and specify the type of data it accepts and zone name.
 /// </summary>
 /// <typeparam name="TData"></typeparam>
-public partial class DropZone1<TData> : ComponentBase
+public partial class DropZone<TData> : ComponentBase
 {
     [Inject]
     private DragDropService DragDropService { get; set; } = default!;
