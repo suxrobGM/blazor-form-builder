@@ -27,5 +27,19 @@ public partial class FormBuilder : ComponentBase
     private void SelectField(Field field)
     {
         _selectedField = field;
+        StateHasChanged();
+    }
+
+    private void HandleDropField(Action addFieldFn)
+    {
+        addFieldFn();
+    }
+    
+    private void SwapFields(Field targetField, Field droppedField)
+    {
+        var targetIndex = _formDefinition.Fields.IndexOf(targetField);
+        var droppedIndex = _formDefinition.Fields.IndexOf(droppedField);
+        var fields = _formDefinition.Fields;
+        (fields[targetIndex], fields[droppedIndex]) = (fields[droppedIndex], fields[targetIndex]);
     }
 }

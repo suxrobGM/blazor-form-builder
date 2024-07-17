@@ -5,7 +5,7 @@ namespace FormBuilder.Models;
 /// <summary>
 /// Represents a model for the form field.
 /// </summary>
-public class Field
+public abstract class Field
 {
     protected Field()
     {
@@ -45,7 +45,7 @@ public class Field
 /// Generic version of the field model with a value of type T.
 /// </summary>
 /// <typeparam name="T">The type of the field value.</typeparam>
-public class Field<T> : Field
+public abstract class Field<T> : Field
 {
     public T? Value { get; set; }
 }

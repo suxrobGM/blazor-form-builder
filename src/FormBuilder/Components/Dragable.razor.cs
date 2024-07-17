@@ -7,8 +7,8 @@ namespace FormBuilder.Components;
 /// Dragable component for drag and drop.
 /// You can wrap any component with this component to make it draggable.
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public partial class Dragable<T> : ComponentBase
+/// <typeparam name="TData"></typeparam>
+public partial class Dragable<TData> : ComponentBase
 {
     [Inject]
     private DragDropService DragDropService { get; set; } = default!;
@@ -20,7 +20,10 @@ public partial class Dragable<T> : ComponentBase
     public string? Zone { get; set; }
 
     [Parameter]
-    public T? Data { get; set;}
+    public TData? Data { get; set;}
+    
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IEnumerable<KeyValuePair<string, object?>>? AdditionalAttributes { get; set; }
 
     private void HandleDragStart()
     {

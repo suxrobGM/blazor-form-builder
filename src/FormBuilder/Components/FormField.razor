@@ -1,33 +1,48 @@
 ﻿@using global::FormBuilder.Models
 
-<RadzenStack>
-    @if (!string.IsNullOrEmpty(Field.Label))
-    {
-        <RadzenLabel Text="@Field.Label" Component="@Field.Name" />
-    }
-    
-    @switch (Field)
-    {
-        case TextField textField:
-            <RadzenTextBox Name="@textField.Name" @bind-Value="textField.Value" />
-            break;
-        case SelectField selectField:
-            <RadzenDropDown
-                Name="@Field.Name"
-                @bind-Value="selectField.Value"
-                Data="@selectField.Options"
-                TextProperty="Text"
-                ValueProperty="Value"
-            />
-            break;
-        case NumericIntField numericIntField:
-            <RadzenNumeric Name="@numericIntField.Name" @bind-Value="numericIntField.Value" />
-            break;
-        case NumericDoubleField numericDoubleField:
-            <RadzenNumeric Name="@numericDoubleField.Name" @bind-Value="numericDoubleField.Value" />
-            break;
-        case DateField dateField:
-            <RadzenDatePicker Name="@dateField.Name" @bind-Value="dateField.Value" />
-            break;
-    }
-</RadzenStack>
+<RadzenFormField Class="w-100" Text="@Field.Label" AllowFloatingLabel="true">
+    <Start>@Prepend</Start>
+    <ChildContent>
+        @switch (Field)
+        {
+            case TextField textField:
+                <RadzenTextBox
+                    Name="@textField.Name"
+                    @bind-Value="textField.Value"
+                    ReadOnly="Disabled">
+                </RadzenTextBox>
+                break;
+            case SelectField selectField:
+                <RadzenDropDown
+                    Name="@Field.Name"
+                    @bind-Value="selectField.Value"
+                    Data="@selectField.Options"
+                    TextProperty="Text"
+                    ValueProperty="Value"
+                    ReadOnly="Disabled">
+                </RadzenDropDown>
+                break;
+            case NumericIntField numericIntField:
+                <RadzenNumeric
+                    Name="@numericIntField.Name"
+                    @bind-Value="numericIntField.Value"
+                    ReadOnly="Disabled">
+                </RadzenNumeric>
+                break;
+            case NumericDoubleField numericDoubleField:
+                <RadzenNumeric
+                    Name="@numericDoubleField.Name"
+                    @bind-Value="numericDoubleField.Value"
+                    ReadOnly="Disabled">
+                </RadzenNumeric>
+                break;
+            case DateField dateField:
+                <RadzenDatePicker
+                    Name="@dateField.Name"
+                    @bind-Value="dateField.Value"
+                    ReadOnly="Disabled"/>
+                break;
+        }
+    </ChildContent>
+    <End>@Append</End>
+</RadzenFormField>

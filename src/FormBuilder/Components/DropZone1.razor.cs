@@ -7,8 +7,8 @@ namespace FormBuilder.Components;
 /// Dropzone component for drag and drop.
 /// Wrap any component with this component to make it a dropzone and specify the type of data it accepts and zone name.
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public partial class Dropzone<T> : ComponentBase
+/// <typeparam name="TData"></typeparam>
+public partial class DropZone1<TData> : ComponentBase
 {
     [Inject]
     private DragDropService DragDropService { get; set; } = default!;
@@ -20,13 +20,16 @@ public partial class Dropzone<T> : ComponentBase
     public string? Zone { get; set; }
 
     [Parameter]
-    public Action<T>? Drop { get; set; }
+    public Action<TData>? Drop { get; set; }
+    
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IEnumerable<KeyValuePair<string, object?>>? AdditionalAttributes { get; set; }
 
     private void HandleDrop()
     {
         if (Drop != null && DragDropService.Accepts(Zone))
         {
-            Drop((T)DragDropService.Data!);
+            Drop((TData)DragDropService.Data!);
         }
     }
 }

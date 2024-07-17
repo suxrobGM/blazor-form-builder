@@ -3,22 +3,25 @@
 @if (SelectedField is not null)
 {
     <RadzenTemplateForm Data="@SelectedField">
-        <RadzenLabel Text="Label" />
-        <RadzenTextBox @bind-Value="SelectedField.Label" />
-    
-        <RadzenLabel Text="Type" />
-        <RadzenTextBox Value="@SelectedField.Type.ToString()" ReadOnly="true" />
-
-        @if (SelectedField is SelectField selectField)
-        {
-            <RadzenLabel Text="List ID" />
-            <RadzenDropDown 
-                @bind-Value="selectField.Value"
-                Data="selectField.Options"
-                TextProperty="Text"
-                ValueProperty="Value"
-            />
-        }
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenFormField Text="Input Type">
+                <RadzenTextBox Value="@SelectedField.Type.ToString()" Disabled="true"/>
+            </RadzenFormField>
+            <RadzenFormField Text="Label">
+                <RadzenTextBox @bind-Value="Label"/>
+            </RadzenFormField>
+            
+            @if (SelectedField is SelectField selectField)
+            {
+                <RadzenFormField Text="List ID">
+                    <RadzenDropDown
+                        @bind-Value="selectField.Value"
+                        Data="selectField.Options"
+                        TextProperty="Text"
+                        ValueProperty="Value">
+                    </RadzenDropDown>
+                </RadzenFormField>
+            }
+        </RadzenStack>
     </RadzenTemplateForm>
 }
-
