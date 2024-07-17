@@ -3,7 +3,8 @@
 public enum FieldType
 {
     Text,
-    Numeric,
+    NumericInt,
+    NumericDouble,
     Date,
     Select,
 }

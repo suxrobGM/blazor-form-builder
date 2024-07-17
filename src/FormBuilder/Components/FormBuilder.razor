@@ -1,8 +1,25 @@
-﻿<RadzenStack>
-    <RadzenFormField Text="RadzenTextBox1" Variant="Variant.Outlined">
-        <RadzenTextBox />
-    </RadzenFormField>
-    <RadzenFormField Text="RadzenTextBox2" Variant="Variant.Outlined">
-        <RadzenTextBox  />
-    </RadzenFormField>
-</RadzenStack>
+﻿@using global::FormBuilder.Models
+
+<RadzenRow class="vh-100">
+    <RadzenColumn Size="9" SizeMD="10">
+        @foreach (var field in _formDefinition.Fields)
+        {
+            <FormField Field="field" />
+        }
+    </RadzenColumn>
+    <RadzenColumn class="border bg-light px-1" Size="3" SizeMD="2">
+        <RadzenStack class="border-bottom mt-2" Orientation="Orientation.Vertical">
+            <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Fields</RadzenText>
+            <RadzenButton Text="Add Text Field" Click="@(() => AddField(FieldType.Text))" />
+            <RadzenButton Text="Add Integer Field" Click="() => AddField(FieldType.NumericInt)" />
+            <RadzenButton Text="Add Decimal Field" Click="() => AddField(FieldType.NumericDouble)" />
+            <RadzenButton Text="Add Date Field" Click="() => AddField(FieldType.Date)" />
+            <RadzenButton Text="Add Select Field" Click="() => AddField(FieldType.Select)" />
+        </RadzenStack>
+        <RadzenStack class="mt-3" Orientation="Orientation.Vertical">
+            <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
+            <PropertyEditor SelectedField="_selectedField" />
+            <RadzenButton Text="Save Form" />
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>

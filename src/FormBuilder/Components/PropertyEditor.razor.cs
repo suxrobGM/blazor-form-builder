@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace FormBuilder.Components;
 
-public partial class NumericField : ComponentBase
+public partial class PropertyEditor : ComponentBase
 {
     [Parameter]
-    public Field? Field { get; set; }
+    public Field? SelectedField { get; set; }
 }

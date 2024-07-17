@@ -1,0 +1,24 @@
+﻿@using global::FormBuilder.Models
+
+@if (SelectedField is not null)
+{
+    <RadzenTemplateForm Data="@SelectedField">
+        <RadzenLabel Text="Label" />
+        <RadzenTextBox @bind-Value="SelectedField.Label" />
+    
+        <RadzenLabel Text="Type" />
+        <RadzenTextBox Value="@SelectedField.Type.ToString()" ReadOnly="true" />
+
+        @if (SelectedField is SelectField selectField)
+        {
+            <RadzenLabel Text="List ID" />
+            <RadzenDropDown 
+                @bind-Value="selectField.Value"
+                Data="selectField.Options"
+                TextProperty="Text"
+                ValueProperty="Value"
+            />
+        }
+    </RadzenTemplateForm>
+}
+
