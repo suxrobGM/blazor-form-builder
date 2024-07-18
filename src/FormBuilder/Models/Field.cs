@@ -9,21 +9,26 @@ public abstract class Field
 {
     protected Field()
     {
-        if (string.IsNullOrEmpty(Name))
+        if (string.IsNullOrEmpty(Id))
         {
-            Name = Generator.GenerateShortId($"{Type}_".ToLower());
+            Id = Generator.GenerateShortId($"{Type}_".ToLower());
         }
     }
     
     /// <summary>
     /// Field unique ID. If not provided, it will be generated.
     /// </summary>
-    public string Name { get; set; }
+    public string Id { get; set; }
     
     /// <summary>
     /// Field label.
     /// </summary>
     public string? Label { get; set; }
+    
+    /// <summary>
+    /// Input placeholder.
+    /// </summary>
+    public string? Placeholder { get; set; }
     
     /// <summary>
     /// Field type such as TextField, NumericIntField, NumericDoubleField, SelectField, DateField.
@@ -39,6 +44,11 @@ public abstract class Field
     /// Whether the field is read-only.
     /// </summary>
     public bool ReadOnly { get; set; }
+    
+    /// <summary>
+    /// Whether the field is disabled.
+    /// </summary>
+    public bool Disabled { get; set; }
 }
 
 /// <summary>

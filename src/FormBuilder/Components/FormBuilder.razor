@@ -2,29 +2,39 @@
 
 <RadzenRow class="vh-100">
     <RadzenColumn Size="8" SizeMD="9" SizeLG="10">
-        <DropZone class="min-vh-100" TData="Action" Drop="HandleDropField" Zone="FieldsZone">
-            <ul class="list-group">
-                @foreach (var field in _formDefinition.Fields)
-                {
-                    <Dragable Data="field" Zone="FieldItemZone">
-                        <li class="list-group-item" onclick="@(() => SelectField(field))">
-                            <DropZone TData="Field" Zone="FieldItemZone" Drop="@((droppingField) => SwapFields(field, droppingField))">
-                                <FormField Field="field" Disabled="true">
-                                    <Append>
-                                        <RadzenButton
-                                            Icon="delete"
-                                            Size="ButtonSize.Small"
-                                            ButtonStyle="ButtonStyle.Danger"
-                                            Click="@(() => RemoveField(field))">
-                                        </RadzenButton>
-                                    </Append>
-                                </FormField>
-                            </DropZone>
-                        </li>
-                    </Dragable>
-                }
-            </ul>
-        </DropZone>
+        <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
+            <RadzenFormField Text="Form ID">
+                <RadzenTextBox @bind-Value="_formDefinition.Id" ReadOnly="true"/>
+            </RadzenFormField>
+
+            <DropZone TData="Action" Drop="(e) => HandleDropField(e)" Zone="FieldsZone">
+                <RadzenFieldset Text="Fields">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                        @foreach (var field in _formDefinition.Fields)
+                        {
+                            <Dragable Data="field" Zone="FieldItemZone">
+                                <DropZone TData="Field"
+                                          Zone="FieldItemZone"
+                                          Drop="@((droppingField) => SwapFields(field, droppingField))"
+                                          @onclick="@(() => SelectField(field))">
+                                    <FormField Field="field" Disabled="true">
+                                        <Append>
+                                            <RadzenButton
+                                                Icon="delete"
+                                                Size="ButtonSize.Small"
+                                                ButtonStyle="ButtonStyle.Danger"
+                                                Click="@(() => RemoveField(field))">
+                                            </RadzenButton>
+                                        </Append>
+                                    </FormField>
+                                </DropZone>
+                            </Dragable>
+                        }
+                    </RadzenStack>
+                </RadzenFieldset>
+            </DropZone>
+        </RadzenStack>
+
     </RadzenColumn>
     <RadzenColumn Class="border bg-light px-1" Size="4" SizeMD="3" SizeLG="2">
         <RadzenStack Class="border-bottom mt-2 pb-2" Orientation="Orientation.Vertical">
@@ -42,12 +52,12 @@
                 <RadzenButton Class="w-100" Text="Date Field" Click="() => AddField(FieldType.Date)"/>
             </Dragable>
             <Dragable Data="() => AddField(FieldType.Select)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Add Select Field" Click="() => AddField(FieldType.Select)"/>
+                <RadzenButton Class="w-100" Text="Select Field" Click="() => AddField(FieldType.Select)"/>
             </Dragable>
         </RadzenStack>
         <RadzenStack Class="mt-3" Orientation="Orientation.Vertical">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
-            <PropertyEditor @bind-SelectedField="_selectedField"/>
+            <PropertyEditor @bind-SelectedField="_selectedField" FieldTypeChanged="(e) => HandleFieldTypeChanged(e)"/>
             <RadzenButton Text="Save Form"/>
         </RadzenStack>
     </RadzenColumn>

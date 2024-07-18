@@ -7,5 +7,5 @@ public class SelectField : Field<int>
         Type = FieldType.Select;
     }
     
-    public List<SelectItem> Options { get; set; } = [];
+    public List<SelectOption> Options { get; set; } = [];
 }

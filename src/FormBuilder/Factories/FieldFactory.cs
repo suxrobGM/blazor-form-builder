@@ -8,7 +8,7 @@ namespace FormBuilder.Factories;
 public static class FieldFactory
 {
     /// <summary>
-    /// Creates a new field based on the provided fieldType.
+    /// Creates a new field model based on the provided fieldType.
     /// List of available field types: TextField, NumericIntField, NumericDoubleField, SelectField, DateField.
     /// </summary>
     /// <param name="fieldType">The type of the field to create.</param>
