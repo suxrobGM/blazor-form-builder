@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Pages
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       run: dotnet workload install wasm-tools
        
     - name: Publish FormBuilder.DesignerApp Project
-      run: dotnet publish ./src/FormBuilder.DesignerApp.csproj -c:Release -p:GHPages=true -o dist/Web --nologo
+      run: dotnet publish ./src/FormBuilder.DesignerApp/FormBuilder.DesignerApp.csproj -c:Release -p:GHPages=true -o dist/Web --nologo
        
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
