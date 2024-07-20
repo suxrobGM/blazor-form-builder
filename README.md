@@ -12,6 +12,9 @@ The library includes a Blazor WebAssembly application for designing and renderin
 - **Form Renderer**: Render forms based on a JSON schema.
 - **Integration**: Seamlessly integrates with a Web API for form data management.
 
+## Demo
+- **Form Designer**: The demo form builder [available](https://suxrobGM.github.io/blazor-form-builder) on GitHub Pages.
+
 ## Getting Started
 
 Follow these steps to set up and run the Blazor Form Builder:
