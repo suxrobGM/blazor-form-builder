@@ -7,6 +7,7 @@ public static class Startup
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.ConfigureLogger();
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
         builder.ConfigureDatabase();

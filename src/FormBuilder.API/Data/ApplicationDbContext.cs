@@ -1,5 +1,5 @@
-﻿using Company.Project.Infrastructure.Helpers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using FormBuilder.API.Entities;
 using FormBuilder.API.ModelConfigurations;
 
 namespace FormBuilder.API.Data;
@@ -7,6 +7,9 @@ namespace FormBuilder.API.Data;
 public class ApplicationDbContext : DbContext
 {
     private readonly ApplicationDbContextOptions _dbContextOptions;
+    
+    public DbSet<Form> Forms { get; set; }
+    public DbSet<LovMaster> LovMaster { get; set; }
     
     public ApplicationDbContext(ApplicationDbContextOptions dbContextOptions)
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Company.Project.Infrastructure.Helpers;
+namespace FormBuilder.API.Data;
 
 internal static class DbContextBuilderExtensions
 {
