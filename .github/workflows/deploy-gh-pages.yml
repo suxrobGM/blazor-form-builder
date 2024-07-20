@@ -1,0 +1,31 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Install .NET WASM Build Tools
+      run: dotnet workload install wasm-tools
+       
+    - name: Publish FormBuilder.DesignerApp Project
+      run: dotnet publish ./src/FormBuilder.DesignerApp.csproj -c:Release -p:GHPages=true -o dist/Web --nologo
+       
+    - name: Commit wwwroot to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: dist/Web/wwwroot

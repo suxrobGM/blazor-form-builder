@@ -1,5 +1,5 @@
 # Blazor Form Builder
-[![.NET Build](https://github.com/suxrobGM/blazor-form-builder/actions/workflows/dotnet.yml/badge.svg)](https://github.com/suxrobGM/blazor-form-builder/actions/workflows/dotnet.yml)
+[![.NET Build](https://github.com/suxrobGM/blazor-form-builder/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/suxrobGM/blazor-form-builder/actions/workflows/deploy-gh-pages.yml)
 
 Blazor Form Builder is a comprehensive library for generating and managing forms within Blazor applications. 
 It provides a simple interface for creating forms with various field types, including text, numeric, date, and dropdown fields. 
