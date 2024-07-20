@@ -13,9 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{110FAC20-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1CF934BD-6E84-458A-8BA9-B35C6CB684D5}"
 	ProjectSection(SolutionItems) = preProject
-		scripts\add-migration.cmd = scripts\add-migration.cmd
-		scripts\apply-migration.cmd = scripts\apply-migration.cmd
-		scripts\remove-migration.cmd = scripts\remove-migration.cmd
 		scripts\run-api.cmd = scripts\run-api.cmd
 		scripts\run-app.cmd = scripts\run-app.cmd
 	EndProjectSection
