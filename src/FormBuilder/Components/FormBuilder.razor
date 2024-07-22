@@ -3,8 +3,15 @@
 <RadzenRow class="vh-100">
     <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
+            @if (_formId is not null)
+            {
+                <RadzenFormField Text="Form ID">
+                    <RadzenTextBox Value="@_formId" ReadOnly="true" />
+                </RadzenFormField>
+            }
+            
             <RadzenFormField Text="Form Name">
-                <RadzenTextBox @bind-Value="_formDefinition.Name" />
+                <RadzenTextBox @bind-Value="_formDefinition.Name"/>
             </RadzenFormField>
 
             <DropZone TData="Action" Drop="(e) => HandleDropField(e)" Zone="FieldsZone">
@@ -58,7 +65,7 @@
         <RadzenStack Class="mt-3" Orientation="Orientation.Vertical">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
             <PropertyEditor @bind-SelectedField="_selectedField" FieldTypeChanged="(e) => HandleFieldTypeChanged(e)"/>
-            <RadzenButton Text="Save Form"/>
+            <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="_isLoading"/>
         </RadzenStack>
     </RadzenColumn>
 </RadzenRow>

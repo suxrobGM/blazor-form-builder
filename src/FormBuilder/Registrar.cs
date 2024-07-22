@@ -18,6 +18,7 @@ public static class Registrar
         services.AddSingleton(options);
         services.AddSingleton<DragDropService>();
         services.AddScoped<FormService>();
+        services.AddRadzenComponents();
         return services;
     }
 }

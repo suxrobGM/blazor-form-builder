@@ -1,11 +1,37 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
+<PageTitle>Blazor Form Builder</PageTitle>
+<RadzenComponents />
 
-    <main class="content">
-        @Body
-    </main>
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenRow class="h-100">
+            <RadzenColumn class="d-flex" Size="3">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                    <RadzenSidebarToggle Click="@ToggleSidebar"/>
+                    <RadzenText class="ms-2" Text="Blazor Form Builder" TextStyle="TextStyle.H5" />
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenHeader>
+    
+    <RadzenSidebar @bind-Expanded="@_sidebarExpanded">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Designer" Icon="home" Path="/designer"/>
+            <RadzenPanelMenuItem Text="Renderer" Icon="build" Path="/renderer"/>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+
+    <RadzenBody>
+        <div class="rz-p-5">
+            @Body
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
 </div>
+

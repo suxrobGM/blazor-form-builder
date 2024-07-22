@@ -8,6 +8,7 @@ public static class Startup
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.ConfigureLogger();
+        builder.ConfigureCors();
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
         builder.ConfigureDatabase();
@@ -24,6 +25,7 @@ public static class Startup
             app.UseSwaggerUI();
         }
         
+        app.UseCors("AnyCors");
         app.UseHttpsRedirection();
         app.MapControllers();
         return app;

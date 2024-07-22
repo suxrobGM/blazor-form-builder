@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using FormBuilder.Models;
 using FormBuilder.Shared.Models;
 
 namespace FormBuilder.Services;
@@ -20,8 +22,15 @@ public class FormService
         };
     }
     
-    public async Task<Result<FormDto>> CreateFormAsync(CreateFormDto createFormDto)
+    public async Task<Result<FormDto>> CreateFormAsync(FormDefinition formDefinition)
     {
+        var formDesign = JsonSerializer.Serialize(formDefinition);
+        var createFormDto = new CreateFormDto
+        {
+            FormName = formDefinition.Name,
+            FormDesign = formDesign
+        };
+        
         var response = await _httpClient.PostAsJsonAsync("forms", createFormDto);
         var result = await response.Content.ReadFromJsonAsync<Result<FormDto>>();
 
@@ -33,8 +42,15 @@ public class FormService
         return Result<FormDto>.Fail(result!.Error!);
     }
     
-    public async Task<Result> UpdateFormAsync(string id, UpdateFormDto updateFormDto)
+    public async Task<Result> UpdateFormAsync(string id, FormDefinition formDefinition)
     {
+        var formDesign = JsonSerializer.Serialize(formDefinition);
+        var updateFormDto = new CreateFormDto
+        {
+            FormName = formDefinition.Name,
+            FormDesign = formDesign
+        };
+        
         var response = await _httpClient.PutAsJsonAsync($"forms/{id}", updateFormDto);
         var result = await response.Content.ReadFromJsonAsync<Result>();
 

@@ -9,16 +9,16 @@ public abstract class Field
 {
     protected Field()
     {
-        if (string.IsNullOrEmpty(Id))
+        if (string.IsNullOrEmpty(Name))
         {
-            Id = Generator.GenerateShortId($"{Type}_".ToLower());
+            Name = Generator.GenerateShortId($"{Type}_".ToLower());
         }
     }
     
     /// <summary>
-    /// Field unique ID. If not provided, it will be generated.
+    /// Field name. If not provided, it will be generated.
     /// </summary>
-    public string Id { get; set; }
+    public string Name { get; set; }
     
     /// <summary>
     /// Field label.
