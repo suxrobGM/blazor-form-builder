@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace FormBuilder.API.Models;
+namespace FormBuilder.Shared.Models;
 
 /// <summary>
 /// Represents the result of an operation.

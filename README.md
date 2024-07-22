@@ -49,14 +49,14 @@ Follow these steps to set up and run the Blazor Form Builder:
 
    Start the Web API project by running the following command script:
    ```sh
-   src/scripts/run-api.cmd
+   src/run-api.cmd
    ```
 
 5. **Run the Blazor Application**
 
    Start the Blazor WebAssembly application by running the following command script:
    ```sh
-   src/scripts/run-app.cmd
+   src/run-app.cmd
    ```
 
 ### Accessing the Applications

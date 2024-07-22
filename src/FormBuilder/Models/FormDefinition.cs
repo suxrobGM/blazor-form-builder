@@ -8,9 +8,9 @@ namespace FormBuilder.Models;
 public class FormDefinition
 {
     /// <summary>
-    /// Unique identifier of the form. Will be generated if not provided.
+    /// Form name. Will be generated if not provided.
     /// </summary>
-    public string Id { get; set; } = Generator.GenerateShortId("form_");
+    public string Name { get; set; } = Generator.GenerateShortId("form_");
     
     /// <summary>
     /// List of field definitions in the form.

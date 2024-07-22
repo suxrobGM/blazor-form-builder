@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1CF9
 		scripts\run-app.cmd = scripts\run-app.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Shared", "src\FormBuilder.Shared\FormBuilder.Shared.csproj", "{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{A8256B2D-73F4-4BDD-9CCE-E379AEE9CDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8256B2D-73F4-4BDD-9CCE-E379AEE9CDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8256B2D-73F4-4BDD-9CCE-E379AEE9CDBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

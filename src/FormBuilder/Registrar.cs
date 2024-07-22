@@ -6,10 +6,18 @@ namespace FormBuilder;
 
 public static class Registrar
 {
-    public static IServiceCollection AddFormBuilder(this IServiceCollection services)
+    public static IServiceCollection AddFormBuilder(this IServiceCollection services, Action<FormBuilderOptions> configure)
     {
-        services.AddRadzenComponents();
+        var options = new FormBuilderOptions();
+        configure(options);
+        return AddFormBuilder(services, options);
+    }
+    
+    public static IServiceCollection AddFormBuilder(this IServiceCollection services, FormBuilderOptions options)
+    {
+        services.AddSingleton(options);
         services.AddSingleton<DragDropService>();
+        services.AddScoped<FormService>();
         return services;
     }
 }

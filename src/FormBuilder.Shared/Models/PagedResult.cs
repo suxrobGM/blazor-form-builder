@@ -1,4 +1,4 @@
-﻿namespace FormBuilder.API.Models;
+﻿namespace FormBuilder.Shared.Models;
 
 /// <summary>
 /// Represents a paged result. This class is used to return a paged list of items.

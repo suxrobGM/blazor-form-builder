@@ -16,4 +16,8 @@
         <PackageReference Include="Radzen.Blazor" Version="4.34.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FormBuilder.Shared\FormBuilder.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

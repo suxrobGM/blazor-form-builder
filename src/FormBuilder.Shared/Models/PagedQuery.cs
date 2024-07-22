@@ -1,4 +1,4 @@
-﻿namespace FormBuilder.API.Models;
+﻿namespace FormBuilder.Shared.Models;
 
 /// <summary>
 /// Represents a query that can be paged.

@@ -1,10 +1,10 @@
 ﻿@using global::FormBuilder.Models
 
 <RadzenRow class="vh-100">
-    <RadzenColumn Size="8" SizeMD="9" SizeLG="10">
+    <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
-            <RadzenFormField Text="Form ID">
-                <RadzenTextBox @bind-Value="_formDefinition.Id" ReadOnly="true"/>
+            <RadzenFormField Text="Form Name">
+                <RadzenTextBox @bind-Value="_formDefinition.Name" />
             </RadzenFormField>
 
             <DropZone TData="Action" Drop="(e) => HandleDropField(e)" Zone="FieldsZone">
@@ -34,9 +34,9 @@
                 </RadzenFieldset>
             </DropZone>
         </RadzenStack>
-
     </RadzenColumn>
-    <RadzenColumn Class="border bg-light px-1" Size="4" SizeMD="3" SizeLG="2">
+    
+    <RadzenColumn Class="border bg-light px-1" Size="12" SizeMD="3" SizeLG="2">
         <RadzenStack Class="border-bottom mt-2 pb-2" Orientation="Orientation.Vertical">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Fields</RadzenText>
             <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
