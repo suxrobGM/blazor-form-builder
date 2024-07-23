@@ -6,10 +6,11 @@ using FormBuilder.Utils;
 
 namespace FormBuilder.Services;
 
-public class FormService
+internal class FormService
 {
     private readonly HttpClient _httpClient;
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
+    private readonly JsonSerializerOptions _jsonSerializerDefaultOptions;
+    private readonly JsonSerializerOptions _jsonSerializerIndentedOptions;
     
     public FormService(FormBuilderOptions options)
     {
@@ -23,9 +24,17 @@ public class FormService
             BaseAddress = new Uri(options.FormApiUrl)
         };
         
-        _jsonSerializerOptions = new JsonSerializerOptions
+        _jsonSerializerDefaultOptions = new JsonSerializerOptions
         {
-            Converters = { new FieldJsonConverter() }
+            Converters = { new FieldJsonConverter() },
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        
+        _jsonSerializerIndentedOptions = new JsonSerializerOptions
+        {
+            Converters = { new FieldJsonConverter() },
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
         };
     }
     
@@ -42,13 +51,41 @@ public class FormService
     {
         try
         {
-            return JsonSerializer.Deserialize<FormDefinition>(formDesign, _jsonSerializerOptions);
+            return JsonSerializer.Deserialize<FormDefinition>(formDesign, _jsonSerializerDefaultOptions);
         }
         catch (JsonException e)
         {
-            Console.WriteLine("Failed to deserialize form design. Error: {0}", e.Message);
+            Console.WriteLine("Failed to deserialize form design. Error: {0}", e);
             return null;
         }
+    }
+    
+    /// <summary>
+    /// Serializes the FormDefinition object into a JSON string.
+    /// </summary>
+    /// <param name="formDefinition">
+    /// FormDefinition object to serialize.
+    /// </param>
+    /// <param name="indented">True to indent the JSON string; otherwise, false.</param>
+    /// <returns>Serialized JSON string of the FormDefinition object.</returns>
+    public string SerializeFormDesign(FormDefinition formDefinition, bool indented = false)
+    {
+        return JsonSerializer.Serialize(formDefinition, indented ? _jsonSerializerIndentedOptions : _jsonSerializerDefaultOptions);
+    }
+    
+    /// <summary>
+    /// Asynchronously serializes the FormDefinition object into a JSON string.
+    /// </summary>
+    /// <param name="formDefinition">FormDefinition object to serialize.</param>
+    /// <param name="indented">True to indent the JSON string; otherwise, false.</param>
+    /// <returns>Serialized JSON string of the FormDefinition object.</returns>
+    public async Task<string> SerializeFormDesignAsync(FormDefinition formDefinition, bool indented = false)
+    {
+        using var ms = new MemoryStream();
+        await JsonSerializer.SerializeAsync(ms, formDefinition, indented ? _jsonSerializerIndentedOptions : _jsonSerializerDefaultOptions);
+        ms.Position = 0;
+        using var reader = new StreamReader(ms);
+        return await reader.ReadToEndAsync();
     }
     
     public async Task<Result<FormDto>> GetFormByIdAsync(string id)
@@ -59,7 +96,7 @@ public class FormService
     
     public async Task<Result<FormDto>> CreateFormAsync(FormDefinition formDefinition)
     {
-        var formDesign = JsonSerializer.Serialize(formDefinition);
+        var formDesign = await SerializeFormDesignAsync(formDefinition);
         var createFormDto = new CreateFormDto
         {
             FormName = formDefinition.Name,
@@ -72,7 +109,7 @@ public class FormService
     
     public async Task<Result> UpdateFormAsync(string id, FormDefinition formDefinition)
     {
-        var formDesign = JsonSerializer.Serialize(formDefinition);
+        var formDesign = await SerializeFormDesignAsync(formDefinition);
         var updateFormDto = new CreateFormDto
         {
             FormName = formDefinition.Name,

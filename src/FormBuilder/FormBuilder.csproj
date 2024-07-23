@@ -12,12 +12,19 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="JsonSchema.Net" Version="7.1.2" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5"/>
         <PackageReference Include="Radzen.Blazor" Version="4.34.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\FormBuilder.Shared\FormBuilder.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="wwwroot\fieldScheme.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

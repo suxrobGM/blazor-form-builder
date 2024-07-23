@@ -14,8 +14,8 @@
                 <RadzenTextBox @bind-Value="_formDefinition.Name"/>
             </RadzenFormField>
 
-            <DropZone TData="Action" Drop="(e) => HandleDropField(e)" Zone="FieldsZone">
-                <RadzenFieldset Text="Fields">
+            <DropZone TData="Func<Task>" Drop="@((func) => func())" Zone="FieldsZone">
+                <RadzenFieldset Text="Fields" Style="max-height: 600px; overflow-y: auto">
                     <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
                         @foreach (var field in _formDefinition.Fields)
                         {
@@ -40,11 +40,15 @@
                     </RadzenStack>
                 </RadzenFieldset>
             </DropZone>
+            
+            <RadzenFormField Text="Generated JSON">
+                <RadzenTextArea @bind-Value="_formDesignJson" Rows="20" ReadOnly="true"/>
+            </RadzenFormField>
         </RadzenStack>
     </RadzenColumn>
     
     <RadzenColumn Class="border bg-light px-1" Size="12" SizeMD="3" SizeLG="2">
-        <RadzenStack Class="border-bottom mt-2 pb-2" Orientation="Orientation.Vertical">
+        <RadzenStack Class="pt-2 pb-2" Orientation="Orientation.Vertical">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Fields</RadzenText>
             <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
                 <RadzenButton Class="w-100" Text="Text Field" Click="@(() => AddField(FieldType.Text))"/>
@@ -61,6 +65,7 @@
             <Dragable Data="() => AddField(FieldType.Select)" Zone="FieldsZone">
                 <RadzenButton Class="w-100" Text="Select Field" Click="() => AddField(FieldType.Select)"/>
             </Dragable>
+            <hr/>
         </RadzenStack>
         <RadzenStack Class="mt-3" Orientation="Orientation.Vertical" Gap="1rem">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>

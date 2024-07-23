@@ -30,8 +30,7 @@ public partial class PropertyEditor : ComponentBase
 
     
     #region Binding Properties
-
-    private string? _label;
+    
     private string? Label
     {
         get => SelectedField?.Label;
@@ -47,7 +46,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private string? _placeholder;
     private string? Placeholder
     {
         get => SelectedField?.Placeholder;
@@ -63,7 +61,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private FieldType _inputType;
     private FieldType InputType
     {
         get => SelectedField?.Type ?? FieldType.Text;
@@ -80,7 +77,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private bool _required;
     private bool Required
     {
         get => SelectedField?.Required ?? false;
@@ -96,7 +92,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private bool _readOnly;
     private bool ReadOnly
     {
         get => SelectedField?.ReadOnly ?? false;
@@ -112,7 +107,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private bool _disabled;
     private bool Disabled
     {
         get => SelectedField?.Disabled ?? false;
@@ -128,7 +122,6 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private int? _selectedListValue;
     private int? SelectedListValue
     {
         get => (SelectedField as SelectField)?.Value;

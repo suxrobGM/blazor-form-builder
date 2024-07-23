@@ -3,7 +3,7 @@
 /// <summary>
 /// Service for drag and drop operations.
 /// </summary>
-public class DragDropService
+internal class DragDropService
 {
     /// <summary>
     /// The data that is being dragged.

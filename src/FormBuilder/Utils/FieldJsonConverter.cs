@@ -4,21 +4,21 @@ using FormBuilder.Models;
 
 namespace FormBuilder.Utils;
 
-public class FieldJsonConverter : JsonConverter<Field>
+internal class FieldJsonConverter : JsonConverter<Field>
 {
     public override Field Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         using var jsonDoc = JsonDocument.ParseValue(ref reader);
         var rootElement = jsonDoc.RootElement;
 
-        if (!rootElement.TryGetProperty("Type", out var fieldTypeProperty))
+        if (!rootElement.TryGetProperty("type", out var fieldTypeProperty))
         {
-            throw new JsonException("Field type is missing");
+            throw new JsonException("The property 'type' is missing");
         }
 
         if (!fieldTypeProperty.TryGetInt32(out var fieldType))
         {
-            throw new JsonException("Field type is not an integer");
+            throw new JsonException("The value of the property 'type' is not an integer");
         }
         
         var enumFieldType = Enum.Parse<FieldType>(fieldType.ToString());
@@ -35,7 +35,7 @@ public class FieldJsonConverter : JsonConverter<Field>
 
         if (field is null)
         {
-            throw new JsonException($"Failed to deserialize field of type {enumFieldType}");
+            throw new JsonException($"Failed to deserialize field of type '{enumFieldType}'");
         }
 
         return field;

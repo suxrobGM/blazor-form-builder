@@ -11,4 +11,9 @@ public static class NotificationServiceExtensions
     {
         notificationService.Notify(NotificationSeverity.Error, "Error", message);
     }
+    
+    public static void NotifyWarning(this NotificationService notificationService, string? message)
+    {
+        notificationService.Notify(NotificationSeverity.Warning, "Warning", message);
+    }
 }
