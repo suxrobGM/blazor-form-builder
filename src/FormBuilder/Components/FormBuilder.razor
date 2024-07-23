@@ -6,10 +6,10 @@
             @if (_formId is not null)
             {
                 <RadzenFormField Text="Form ID">
-                    <RadzenTextBox Value="@_formId" ReadOnly="true" />
+                    <RadzenTextBox Value="@_formId" ReadOnly="true"/>
                 </RadzenFormField>
             }
-            
+
             <RadzenFormField Text="Form Name">
                 <RadzenTextBox @bind-Value="_formDefinition.Name"/>
             </RadzenFormField>
@@ -62,10 +62,12 @@
                 <RadzenButton Class="w-100" Text="Select Field" Click="() => AddField(FieldType.Select)"/>
             </Dragable>
         </RadzenStack>
-        <RadzenStack Class="mt-3" Orientation="Orientation.Vertical">
+        <RadzenStack Class="mt-3" Orientation="Orientation.Vertical" Gap="1rem">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
             <PropertyEditor @bind-SelectedField="_selectedField" FieldTypeChanged="(e) => HandleFieldTypeChanged(e)"/>
+            <hr/>
             <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="_isLoading"/>
+            <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="_isLoading"/>
         </RadzenStack>
     </RadzenColumn>
 </RadzenRow>

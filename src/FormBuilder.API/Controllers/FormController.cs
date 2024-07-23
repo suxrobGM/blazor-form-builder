@@ -60,7 +60,7 @@ public class FormController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(Result<Form>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateForm([FromBody] CreateFormDto formDto)
+    public async Task<IActionResult> CreateForm(CreateFormDto formDto)
     {
         if (string.IsNullOrEmpty(formDto.FormName))
         {
@@ -91,7 +91,7 @@ public class FormController : ControllerBase
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateForm(string id, [FromBody] UpdateFormDto formDto)
+    public async Task<IActionResult> UpdateForm(string id, UpdateFormDto formDto)
     {
         var existingForm = await _context.Forms.FindAsync(id);
         
@@ -110,7 +110,7 @@ public class FormController : ControllerBase
             existingForm.FormDesign = formDto.FormDesign;
         }
         
-        _context.Update(formDto);
+        _context.Update(existingForm);
         await _context.SaveChangesAsync();
         return Ok(Result.Succeed());
     }

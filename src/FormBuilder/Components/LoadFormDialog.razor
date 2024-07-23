@@ -1,0 +1,27 @@
+﻿@using global::FormBuilder.Shared.Models
+
+<RadzenTemplateForm TItem="FormDto" Data="_formModel" Submit="() => LoadFormAsync()">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenText TextStyle="TextStyle.Body1">
+            Specify either Form ID or JSON design to load into builder
+        </RadzenText>
+        <RadzenFormField Text="Form ID">
+            <ChildContent>
+                <RadzenTextBox Name="FormId" @bind-Value="_formModel.Id"/>
+            </ChildContent>
+            <Helper>
+                <RadzenCustomValidator Component="FormId" Text="Either form ID or JSON design is required" Validator="EitherIdOrDesignRequired"/>
+            </Helper>
+        </RadzenFormField>
+        <RadzenFormField Text="Form JSON Design">
+            <ChildContent>
+                <RadzenTextArea Name="FormDesign" @bind-Value="_formModel.FormDesign" Rows="15"/>
+            </ChildContent>
+            <Helper>
+                <RadzenCustomValidator Component="FormDesign" Text="Either form ID or JSON design is required" Validator="EitherIdOrDesignRequired"/>
+                <RadzenCustomValidator Component="FormDesign" Text="Invalid JSON design" Validator="ValidateFormDesign"/>
+            </Helper>
+        </RadzenFormField>
+        <RadzenButton ButtonType="ButtonType.Submit" Text="Load Form" Disabled="_isLoading"/>
+    </RadzenStack>
+</RadzenTemplateForm>

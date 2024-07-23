@@ -76,11 +76,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Type = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
-            FieldTypeChanged.InvokeAsync(new FieldTypeChangedArgs
-            {
-                Field = SelectedField, 
-                NewType = value
-            });
+            FieldTypeChanged.InvokeAsync(new FieldTypeChangedArgs(SelectedField, value));
         }
     }
     
@@ -154,15 +150,4 @@ public partial class PropertyEditor : ComponentBase
 /// <summary>
 /// Parameters for the FieldTypeChanged event.
 /// </summary>
-public class FieldTypeChangedArgs : EventArgs
-{
-    /// <summary>
-    /// The field that has changed.
-    /// </summary>
-    public required Field Field { get; set; }
-    
-    /// <summary>
-    /// The new type of the field.
-    /// </summary>
-    public required FieldType NewType { get; set; }
-}
+public record FieldTypeChangedArgs(Field Field, FieldType NewType);

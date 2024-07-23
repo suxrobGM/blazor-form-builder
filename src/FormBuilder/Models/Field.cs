@@ -1,13 +1,15 @@
-﻿using FormBuilder.Utils;
+﻿using System.Text.Json.Serialization;
+using FormBuilder.Utils;
 
 namespace FormBuilder.Models;
 
 /// <summary>
 /// Represents a model for the form field.
 /// </summary>
-public abstract class Field
+[JsonConverter(typeof(FieldJsonConverter))]
+public class Field
 {
-    protected Field()
+    public Field()
     {
         if (string.IsNullOrEmpty(Name))
         {
@@ -55,7 +57,7 @@ public abstract class Field
 /// Generic version of the field model with a value of type T.
 /// </summary>
 /// <typeparam name="T">The type of the field value.</typeparam>
-public abstract class Field<T> : Field
+public class Field<T> : Field
 {
     public T? Value { get; set; }
 }

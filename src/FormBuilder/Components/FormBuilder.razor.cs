@@ -24,6 +24,9 @@ public partial class FormBuilder : ComponentBase
     
     [Inject] 
     private NotificationService NotificationService { get; set; } = default!;
+    
+    [Inject]
+    private DialogService DialogService { get; set; } = default!;
 
     #endregion
     
@@ -32,7 +35,6 @@ public partial class FormBuilder : ComponentBase
     {
         var field = FieldFactory.CreateField(fieldType);
         field.Label = fieldType.ToString();
-
         _formDefinition.Fields.Add(field);
         SelectField(field);
     }
@@ -69,9 +71,9 @@ public partial class FormBuilder : ComponentBase
         SelectField(newField);
     }
 
-    private void HandleDropField(Action addFieldFn)
+    private void HandleDropField(Action addFieldCallback)
     {
-        addFieldFn();
+        addFieldCallback();
     }
     
     private void SwapFields(Field targetField, Field droppedField)
@@ -100,13 +102,28 @@ public partial class FormBuilder : ComponentBase
         
         if (result.Success)
         {
-            NotificationService.Notify(NotificationSeverity.Success, "Form saved successfully");
+            NotificationService.NotifySuccess("Form saved successfully");
         }
         else
         {
-            NotificationService.Notify(NotificationSeverity.Error, result.Error);
+            NotificationService.NotifyError(result.Error);
         }
         
         _isLoading = false;
+    }
+
+    private Task OpenLoadFormDialogAsync()
+    {
+        return DialogService.OpenAsync<LoadFormDialog>("Load Form", new Dictionary<string, object>
+        {
+            { "FormLoaded", EventCallback.Factory.Create<FormCreatedEventArgs>(this, LoadForm) }
+        });
+    }
+    
+    private void LoadForm(FormCreatedEventArgs args)
+    {
+        _formId = args.FormId;
+        _formDefinition = args.FormDefinition;
+        StateHasChanged();
     }
 }
