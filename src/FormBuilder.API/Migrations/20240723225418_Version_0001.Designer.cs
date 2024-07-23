@@ -3,16 +3,16 @@ using System;
 using FormBuilder.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace FormBuilder.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240720030555_Version_0001")]
+    [Migration("20240723225418_Version_0001")]
     partial class Version_0001
     {
         /// <inheritdoc />
@@ -21,49 +21,43 @@ namespace FormBuilder.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("FormBuilder.API.Entities.Form", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FormDesign")
-                        .HasColumnType("text")
-                        .HasColumnName("form_design");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FormName")
-                        .HasColumnType("text")
-                        .HasColumnName("form_name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("forms", (string)null);
+                    b.ToTable("Forms", (string)null);
                 });
 
             modelBuilder.Entity("FormBuilder.API.Entities.LovMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ListId")
-                        .HasColumnType("integer")
-                        .HasColumnName("list_id");
+                        .HasColumnType("int");
 
                     b.Property<string>("ListValue")
-                        .HasColumnType("text")
-                        .HasColumnName("list_value");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("lov_master", (string)null);
+                    b.ToTable("LovMaster", (string)null);
                 });
 #pragma warning restore 612, 618
         }

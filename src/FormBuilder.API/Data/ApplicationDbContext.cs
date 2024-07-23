@@ -23,7 +23,7 @@ public class ApplicationDbContext : DbContext
             throw new ArgumentException("The connection string is not specified");
         }
         
-        optionsBuilder.ConfigurePostgreSql(_dbContextOptions.ConnectionString);
+        optionsBuilder.ConfigureSqlServer(_dbContextOptions.ConnectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

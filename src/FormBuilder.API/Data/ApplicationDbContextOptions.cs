@@ -5,7 +5,7 @@
 /// </summary>
 public class ApplicationDbContextOptions
 {
-    private const string DefaultConnectionString = "Host=localhost;Port=5432;Database=FormBuilderDB;Username=postgres;Password=postgres";
+    private const string DefaultConnectionString = "Data Source=.\\SQLEXPRESS; Database=FormBuilderDB; Trusted_Connection=true; TrustServerCertificate=true;";
     
     /// <summary>
     /// The connection string to the database.

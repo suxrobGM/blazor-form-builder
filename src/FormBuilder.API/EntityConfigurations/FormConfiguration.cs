@@ -8,10 +8,9 @@ public class FormConfiguration : IEntityTypeConfiguration<Form>
 {
     public void Configure(EntityTypeBuilder<Form> builder)
     {
-        builder.ToTable("forms");
+        builder.ToTable("Forms");
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Id).HasColumnName("id");
-        builder.Property(e => e.FormName).HasColumnName("form_name");
-        builder.Property(e => e.FormDesign).HasColumnName("form_design");
+        builder.Property(e => e.FormName);
+        builder.Property(e => e.FormDesign);
     }
 }
