@@ -39,12 +39,25 @@
             {
                 <RadzenFormField Text="List ID">
                     <RadzenDropDown
-                        @bind-Value="SelectedListValue"
-                        Data="selectField.Options"
-                        TextProperty="Text"
-                        ValueProperty="Value">
+                        @bind-Value="SelectedListId"
+                        Data="_listIds"
+                        LoadData="LoadListIdValuesAsync"
+                        AllowVirtualization="true"
+                        AllowFiltering="true"
+                        AllowClear="true">
                     </RadzenDropDown>
                 </RadzenFormField>
+                
+                @if (selectField.Options.Any())
+                {
+                    <RadzenFormField Text="List Values">
+                        <RadzenDropDown
+                            Data="_listValues"
+                            AllowFiltering="true"
+                            AllowClear="true">
+                        </RadzenDropDown>
+                    </RadzenFormField>
+                }
             }
         </RadzenStack>
     </RadzenTemplateForm>

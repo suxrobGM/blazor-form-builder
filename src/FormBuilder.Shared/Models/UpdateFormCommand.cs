@@ -1,6 +1,6 @@
 ﻿namespace FormBuilder.Shared.Models;
 
-public record UpdateFormDto
+public record UpdateFormCommand
 {
     public string? FormName { get; set; }
     public string? FormDesign { get; set; }

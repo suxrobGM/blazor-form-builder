@@ -1,5 +1,7 @@
 ﻿using FormBuilder.Models;
+using FormBuilder.Services;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace FormBuilder.Components;
 
@@ -9,7 +11,22 @@ namespace FormBuilder.Components;
 public partial class PropertyEditor : ComponentBase
 {
     private DropDownEnumItem<FieldType>[] _inputTypes = DropDownEnumItem.CreateItems<FieldType>();
+    private int? _selectedListId;
+    private IEnumerable<int> _listIds = [];
+    private IEnumerable<string?> _listValues = [];
+
+    #region Injected Services
+
+    [Inject]
+    private FormService FormService { get; set; } = default!;
     
+    [Inject]
+    private NotificationService NotificationService { get; set; } = default!;
+
+    #endregion
+    
+    #region Parameters
+
     /// <summary>
     /// The currently selected field to edit.
     /// </summary>
@@ -28,6 +45,8 @@ public partial class PropertyEditor : ComponentBase
     [Parameter]
     public EventCallback<FieldTypeChangedArgs> FieldTypeChanged { get; set; }
 
+    #endregion
+    
     
     #region Binding Properties
     
@@ -122,22 +141,45 @@ public partial class PropertyEditor : ComponentBase
         }
     }
     
-    private int? SelectedListValue
+    private int? SelectedListId
     {
-        get => (SelectedField as SelectField)?.Value;
+        get => (SelectedField as SelectField)?.ListId;
         set
         {
-            if (!value.HasValue || SelectedField is not SelectField selectedField || selectedField.Value == value)
+            if (SelectedField is SelectField selectField && selectField.ListId != value)
             {
-                return;
+                selectField.ListId = value;
+                SelectedFieldChanged.InvokeAsync(SelectedField);
+                _ = FetchListValuesAsync(value);
             }
-            
-            selectedField.Value = value.Value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
         }
     }
 
     #endregion
+    
+    private async Task LoadListIdValuesAsync(LoadDataArgs args)
+    {
+        var pagedData = await FormService.GetListIdPagedAsync(args.ToPagedQuery());
+        _listIds = pagedData.Data ?? [];
+    }
+    
+    private async Task FetchListValuesAsync(int? listId)
+    {
+        if (!listId.HasValue)
+        {
+            return;
+        }   
+        
+        var result = await FormService.GetLovAsync(listId.Value);
+            
+        if (!result.Success || result.Data is null)
+        {
+            NotificationService.NotifyError(result.Error);
+            return;
+        }
+        
+        _listValues = result.Data.Select(x => x.ListValue);
+    }
 }
 
 /// <summary>

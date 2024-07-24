@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FormBuilder.API.ModelConfigurations;
 
-public class LovMasterConfiguration : IEntityTypeConfiguration<LovMaster>
+public class LovConfiguration : IEntityTypeConfiguration<Lov>
 {
-    public void Configure(EntityTypeBuilder<LovMaster> builder)
+    public void Configure(EntityTypeBuilder<Lov> builder)
     {
         builder.ToTable("LovMaster");
         builder.HasKey(e => e.Id);

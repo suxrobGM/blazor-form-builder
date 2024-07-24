@@ -87,7 +87,9 @@ internal class FormService
         using var reader = new StreamReader(ms);
         return await reader.ReadToEndAsync();
     }
-    
+
+    #region Form API Methods
+
     public async Task<Result<FormDto>> GetFormByIdAsync(string id)
     {
         var response = await _httpClient.GetAsync($"/api/forms/{id}");
@@ -97,7 +99,7 @@ internal class FormService
     public async Task<Result<FormDto>> CreateFormAsync(FormDefinition formDefinition)
     {
         var formDesign = await SerializeFormDesignAsync(formDefinition);
-        var createFormDto = new CreateFormDto
+        var createFormDto = new CreateFormCommand
         {
             FormName = formDefinition.Name,
             FormDesign = formDesign
@@ -110,7 +112,7 @@ internal class FormService
     public async Task<Result> UpdateFormAsync(string id, FormDefinition formDefinition)
     {
         var formDesign = await SerializeFormDesignAsync(formDefinition);
-        var updateFormDto = new CreateFormDto
+        var updateFormDto = new CreateFormCommand
         {
             FormName = formDefinition.Name,
             FormDesign = formDesign
@@ -119,6 +121,46 @@ internal class FormService
         var response = await _httpClient.PutAsJsonAsync($"/api/forms/{id}", updateFormDto);
         return await HandleResponse(response);
     }
+    
+    public async Task<Result> DeleteFormAsync(string id)
+    {
+        var response = await _httpClient.DeleteAsync($"/api/forms/{id}");
+        return await HandleResponse(response);
+    }
+
+    #endregion
+
+    #region LOV API Methods
+    
+    /// <summary>
+    /// Gets a paged list of List IDs.
+    /// </summary>
+    /// <param name="pagedQuery">
+    /// Paged query object containing the page number and page size.
+    /// </param>
+    /// <returns>
+    /// PagedResult object containing the list of List IDs if successful, otherwise an error message.
+    /// </returns>
+    public async Task<PagedResult<int>> GetListIdPagedAsync(PagedQuery pagedQuery)
+    {
+        var response = await _httpClient.GetAsync($"/api/lov?{pagedQuery.ToQueryString()}");
+        return await HandlePagedResponse<int>(response);
+    }
+    
+    /// <summary>
+    /// Gets list of values filtered by ListId
+    /// </summary>
+    /// <param name="listId">List ID</param>
+    /// <returns>
+    /// Result object containing the list of values if successful, otherwise an error message.
+    /// </returns>
+    public async Task<Result<LovDto[]>> GetLovAsync(int listId)
+    {
+        var response = await _httpClient.GetAsync($"/api/lov/{listId}");
+        return await HandleResponse<LovDto[]>(response);
+    }
+    
+    #endregion
     
     private async Task<Result> HandleResponse(HttpResponseMessage response)
     {
@@ -141,5 +183,22 @@ internal class FormService
         }
         
         return Result<T>.Succeed(result!.Data!);
+    }
+    
+    private async Task<PagedResult<T>> HandlePagedResponse<T>(HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            return PagedResult<T>.Fail($"Failed to call API. Status code: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+        }
+        
+        var result = await response.Content.ReadFromJsonAsync<PagedResult<T>>();
+        
+        if (result is { Success: false, Error: not null })
+        {
+            return PagedResult<T>.Fail(result.Error!);
+        }
+        
+        return PagedResult<T>.Succeed(result!.Data!, result.PageSize, result.PagesCount);
     }
 }

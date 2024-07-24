@@ -49,4 +49,9 @@ public class PagedQuery
 
         return queryDict;
     }
+    
+    public string ToQueryString()
+    {
+        return string.Join("&", ToDictionary().Select(i => $"{i.Key}={i.Value}"));
+    }
 }

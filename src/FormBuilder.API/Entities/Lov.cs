@@ -1,6 +1,9 @@
 ﻿namespace FormBuilder.API.Entities;
 
-public class LovMaster
+/// <summary>
+/// Entity class for list of values.
+/// </summary>
+public class Lov
 {
     public int Id { get; set; }
     public int? ListId { get; set; }

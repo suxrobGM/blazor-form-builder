@@ -9,7 +9,7 @@ public class ApplicationDbContext : DbContext
     private readonly ApplicationDbContextOptions _dbContextOptions;
     
     public DbSet<Form> Forms { get; set; }
-    public DbSet<LovMaster> LovMaster { get; set; }
+    public DbSet<Lov> LovMaster { get; set; }
     
     public ApplicationDbContext(ApplicationDbContextOptions dbContextOptions)
     {
@@ -30,6 +30,6 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new FormConfiguration());
-        modelBuilder.ApplyConfiguration(new LovMasterConfiguration());  
+        modelBuilder.ApplyConfiguration(new LovConfiguration());  
     }
 }
