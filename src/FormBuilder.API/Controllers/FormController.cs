@@ -33,8 +33,10 @@ public class FormController : ControllerBase
             .Select(i => i.ToDto())
             .ToArrayAsync();
         
+        var itemsCount = await _context.Forms.CountAsync();
+        var pagesCount = (int)Math.Ceiling(itemsCount / (double)pagedQuery.PageSize);
         
-        return Ok(PagedResult<FormDto>.Succeed(forms));
+        return Ok(PagedResult<FormDto>.Succeed(forms, pagedQuery.PageSize, pagesCount));
     }
     
     /// <summary>

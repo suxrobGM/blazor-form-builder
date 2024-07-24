@@ -1,4 +1,5 @@
 using FormBuilder.API;
+using FormBuilder.API.Data;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -12,8 +13,16 @@ try
     var app = WebApplication.CreateBuilder(args)
         .ConfigureServices()
         .ConfigurePipeline();
-    
-    app.Run();
+
+    if (args.Contains("--seed"))
+    {
+        using var serviceScope = app.Services.CreateScope();
+        await SeedData.InitializeAsync(serviceScope.ServiceProvider);
+    }
+    else
+    {
+        app.Run();
+    }
 }
 catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException")
 {

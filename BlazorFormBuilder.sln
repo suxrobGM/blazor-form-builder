@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1CF9
 	ProjectSection(SolutionItems) = preProject
 		scripts\run-api.cmd = scripts\run-api.cmd
 		scripts\run-app.cmd = scripts\run-app.cmd
+		scripts\add-migration.cmd = scripts\add-migration.cmd
+		scripts\apply-migration.cmd = scripts\apply-migration.cmd
+		scripts\remove-migration.cmd = scripts\remove-migration.cmd
+		scripts\seed-database.cmd = scripts\seed-database.cmd
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Shared", "src\FormBuilder.Shared\FormBuilder.Shared.csproj", "{A47F6C89-EEE4-4F2C-9CC0-4C40724DFDE5}"

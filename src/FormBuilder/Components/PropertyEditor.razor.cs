@@ -11,9 +11,9 @@ namespace FormBuilder.Components;
 public partial class PropertyEditor : ComponentBase
 {
     private DropDownEnumItem<FieldType>[] _inputTypes = DropDownEnumItem.CreateItems<FieldType>();
-    private int? _selectedListId;
-    private IEnumerable<int> _listIds = [];
     private IEnumerable<string?> _listValues = [];
+    private IEnumerable<int> _listIds = [];
+    private int _listIdCount;
 
     #region Injected Services
 
@@ -156,11 +156,18 @@ public partial class PropertyEditor : ComponentBase
     }
 
     #endregion
-    
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load the first 10 list IDs
+        await LoadListIdValuesAsync(new LoadDataArgs {Top = 10});
+    }
+
     private async Task LoadListIdValuesAsync(LoadDataArgs args)
     {
         var pagedData = await FormService.GetListIdPagedAsync(args.ToPagedQuery());
         _listIds = pagedData.Data ?? [];
+        _listIdCount = pagedData.PageSize * pagedData.PagesCount;
     }
     
     private async Task FetchListValuesAsync(int? listId)

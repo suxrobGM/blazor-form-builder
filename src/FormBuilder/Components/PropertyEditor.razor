@@ -41,6 +41,7 @@
                     <RadzenDropDown
                         @bind-Value="SelectedListId"
                         Data="_listIds"
+                        Count="@_listIdCount"
                         LoadData="LoadListIdValuesAsync"
                         AllowVirtualization="true"
                         AllowFiltering="true"
@@ -52,6 +53,7 @@
                 {
                     <RadzenFormField Text="List Values">
                         <RadzenDropDown
+                            TValue="string"
                             Data="_listValues"
                             AllowFiltering="true"
                             AllowClear="true">

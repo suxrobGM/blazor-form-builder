@@ -11,6 +11,13 @@ public class SelectField : Field<string>
         Type = FieldType.Select;
     }
     
+    /// <summary>
+    /// The list ID that corresponds to the list of options for this field.
+    /// </summary>
     public int? ListId { get; set; }
+    
+    /// <summary>
+    /// Associated list values for the particular list ID.
+    /// </summary>
     public IEnumerable<string> Options { get; set; } = [];
 }

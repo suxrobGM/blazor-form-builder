@@ -33,7 +33,14 @@ public class LovController : ControllerBase
             .Take(pagedQuery.PageSize)
             .ToArrayAsync();
         
-        return Ok(PagedResult<int?>.Succeed(listIds));
+        var itemsCount = await _context.LovMaster
+            .Select(i => i.ListId)
+            .Distinct()
+            .CountAsync();
+        
+        var pagesCount = (int)Math.Ceiling(itemsCount / (double)pagedQuery.PageSize);
+        
+        return Ok(PagedResult<int?>.Succeed(listIds, pagedQuery.PageSize, pagesCount));
     }
     
     /// <summary>

@@ -5,10 +5,14 @@
 /// </summary>
 public class PagedQuery
 {
+    public PagedQuery() : this(null, 1, 10)
+    {
+    }
+    
     public PagedQuery(
-        string? orderBy = null,
-        int page = 1,
-        int pageSize = 10)
+        string? orderBy,
+        int page,
+        int pageSize)
     {
         OrderBy = orderBy;
         Page = page;
