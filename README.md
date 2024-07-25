@@ -42,7 +42,7 @@ Follow these steps to set up and run the Blazor Form Builder:
 
    Apply the database migrations by running the following command script:
    ```sh
-   src/FormBuilder.API/Scripts/apply-migrations.cmd
+   scripts/apply-migrations.cmd
    ```
 
 4. **Run the Web API Project**
