@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FormBuilder.Models;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace FormBuilder.Services;
 
-internal class FormService
+public class FormService
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonSerializerDefaultOptions;
@@ -65,6 +66,29 @@ internal class FormService
         try
         {
             return JsonSerializer.Deserialize<FormDefinition>(formDesign, _jsonSerializerDefaultOptions);
+        }
+        catch (JsonException e)
+        {
+            Console.WriteLine("Failed to deserialize form design. Error: {0}", e);
+            return null;
+        }
+    }
+    
+    /// <summary>
+    /// Asynchronously deserializes the form design JSON string into a FormDefinition object.
+    /// </summary>
+    /// <param name="formDesign">
+    /// Serialized form design JSON string from FormDefinition object.
+    /// </param>
+    /// <returns>
+    /// FormDefinition object if deserialization is successful, otherwise null.
+    /// </returns>
+    public async Task<FormDefinition?> DeserializeFormDesignAsync(string formDesign)
+    {
+        try
+        {
+            using var ms = new MemoryStream(Encoding.UTF8.GetBytes(formDesign));
+            return await JsonSerializer.DeserializeAsync<FormDefinition>(ms, _jsonSerializerDefaultOptions);
         }
         catch (JsonException e)
         {

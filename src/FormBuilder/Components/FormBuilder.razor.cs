@@ -13,7 +13,6 @@ namespace FormBuilder.Components;
 public partial class FormBuilder : ComponentBase
 {
     private FormDefinition _formDefinition = new();
-    
     private string _formDesignJson = "{}";
     private string? _formId;
     private bool _isLoading;
@@ -152,11 +151,11 @@ public partial class FormBuilder : ComponentBase
     {
         return DialogService.OpenAsync<LoadFormDialog>("Load Form", new Dictionary<string, object>
         {
-            { "FormLoaded", EventCallback.Factory.Create<FormCreatedEventArgs>(this, LoadForm) }
+            { "FormLoaded", EventCallback.Factory.Create<FormLoadedEventArgs>(this, LoadForm) }
         });
     }
     
-    private Task LoadForm(FormCreatedEventArgs args)
+    private Task LoadForm(FormLoadedEventArgs args)
     {
         _formId = args.FormId;
         _formDefinition = args.FormDefinition;

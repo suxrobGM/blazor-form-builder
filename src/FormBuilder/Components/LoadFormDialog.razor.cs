@@ -25,7 +25,7 @@ public partial class LoadFormDialog : ComponentBase
     #region Parameters
 
     [Parameter]
-    public EventCallback<FormCreatedEventArgs> FormLoaded { get; set; }
+    public EventCallback<FormLoadedEventArgs> FormLoaded { get; set; }
 
     #endregion
     
@@ -54,7 +54,7 @@ public partial class LoadFormDialog : ComponentBase
         
         if (!string.IsNullOrEmpty(_formModel.FormDesign))
         {
-            return HandleFormDesignDeserialization(_formModel.FormDesign, null);
+            return HandleFormDeserialization(_formModel.FormDesign, null);
         }
         
         return Task.CompletedTask;
@@ -68,7 +68,7 @@ public partial class LoadFormDialog : ComponentBase
         
         if (result is { Success: true, Data.FormDesign: not null })
         {
-            await HandleFormDesignDeserialization(result.Data.FormDesign, _formModel.Id);
+            await HandleFormDeserialization(result.Data.FormDesign, _formModel.Id);
         }
         else
         {
@@ -78,12 +78,12 @@ public partial class LoadFormDialog : ComponentBase
         _isLoading = false;
     }
     
-    private async Task HandleFormDesignDeserialization(string formDesign, string? id)
+    private async Task HandleFormDeserialization(string formDesign, string? id)
     {
-        var formDefinition = FormService.DeserializeFormDesign(formDesign);
+        var formDefinition = await FormService.DeserializeFormDesignAsync(formDesign);
         if (formDefinition != null)
         {
-            await FormLoaded.InvokeAsync(new FormCreatedEventArgs(id, formDefinition));
+            await FormLoaded.InvokeAsync(new FormLoadedEventArgs(id, formDefinition));
             NotificationService.NotifySuccess("Form loaded successfully.");
         }
         else
@@ -93,4 +93,4 @@ public partial class LoadFormDialog : ComponentBase
     }
 }
 
-public record FormCreatedEventArgs(string? FormId, FormDefinition FormDefinition);
+public record FormLoadedEventArgs(string? FormId, FormDefinition FormDefinition);

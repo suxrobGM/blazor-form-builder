@@ -1,3 +1,20 @@
 ﻿@page "/renderer"
 
 <RadzenText TextStyle="TextStyle.H3">Renderer</RadzenText>
+
+<RadzenStack Class="vh-100" Orientation="Orientation.Vertical" Gap="1rem">
+    <FormRenderer></FormRenderer>
+
+    <RadzenText TextStyle="TextStyle.Subtitle1">
+        Specify either Form ID or JSON design to load into renderer
+    </RadzenText>
+    <RadzenFormField Text="Form ID">
+        <RadzenTextBox Value="@_formId" ReadOnly="true"/>
+    </RadzenFormField>
+    <RadzenFormField Text="Form JSON">
+        <RadzenTextArea @bind-Value="_formJson" Rows="20"/>
+    </RadzenFormField>
+    <div>
+        <RadzenButton Text="Load Form" Click="LoadFormAsync" Disabled="_isLoading"/>
+    </div>
+</RadzenStack>
