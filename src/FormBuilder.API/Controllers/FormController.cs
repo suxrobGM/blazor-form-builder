@@ -23,9 +23,7 @@ public class FormController : ControllerBase
     /// </summary>
     /// <param name="pagedQuery">Paged query</param>
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResult<FormDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetFormsPaged([FromQuery] PagedQuery pagedQuery)
+    public async Task<PagedResult<FormDto>> GetFormsPaged([FromQuery] PagedQuery pagedQuery)
     {
         var forms = await _context.Forms
             .Skip((pagedQuery.Page - 1) * pagedQuery.PageSize)
@@ -36,7 +34,7 @@ public class FormController : ControllerBase
         var itemsCount = await _context.Forms.CountAsync();
         var pagesCount = (int)Math.Ceiling(itemsCount / (double)pagedQuery.PageSize);
         
-        return Ok(PagedResult<FormDto>.Succeed(forms, pagedQuery.PageSize, pagesCount));
+        return PagedResult<FormDto>.Succeed(forms, pagedQuery.PageSize, pagesCount);
     }
     
     /// <summary>
@@ -46,7 +44,7 @@ public class FormController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Result<FormDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetFormById(string id)
+    public async Task<ActionResult<Result<FormDto>>> GetFormById(string id)
     {
         var form = await _context.Forms.FindAsync(id);
         
@@ -55,7 +53,7 @@ public class FormController : ControllerBase
             return BadRequest(Result.Fail($"Form with id {id} not found"));
         }
         
-        return Ok(Result<FormDto>.Succeed(form.ToDto()));
+        return Result<FormDto>.Succeed(form.ToDto());
     }
     
     /// <summary>
@@ -65,7 +63,7 @@ public class FormController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(Result<FormDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateForm(CreateFormCommand formCommand)
+    public async Task<ActionResult<Result<FormDto>>> CreateForm(CreateFormCommand formCommand)
     {
         if (string.IsNullOrEmpty(formCommand.FormName))
         {
@@ -85,7 +83,7 @@ public class FormController : ControllerBase
         
         _context.Forms.Add(newForm);
         await _context.SaveChangesAsync();
-        return Ok(Result<FormDto>.Succeed(newForm.ToDto()));
+        return Result<FormDto>.Succeed(newForm.ToDto());
     }
     
     /// <summary>
@@ -96,7 +94,7 @@ public class FormController : ControllerBase
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateForm(string id, UpdateFormCommand formCommand)
+    public async Task<ActionResult<Result>> UpdateForm(string id, UpdateFormCommand formCommand)
     {
         var existingForm = await _context.Forms.FindAsync(id);
         
@@ -117,13 +115,17 @@ public class FormController : ControllerBase
         
         _context.Update(existingForm);
         await _context.SaveChangesAsync();
-        return Ok(Result.Succeed());
+        return Result.Succeed();
     }
     
+    /// <summary>
+    /// Deletes a form by its id.
+    /// </summary>
+    /// <param name="id">Form ID</param>
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Result<FormDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteForm(string id)
+    public async Task<ActionResult<Result>> DeleteForm(string id)
     {
         var existingForm = await _context.Forms.FindAsync(id);
         
@@ -134,6 +136,6 @@ public class FormController : ControllerBase
         
         _context.Forms.Remove(existingForm);
         await _context.SaveChangesAsync();
-        return Ok(Result.Succeed());
+        return Result.Succeed();
     }
 }

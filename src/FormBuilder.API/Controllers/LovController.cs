@@ -22,9 +22,7 @@ public class LovController : ControllerBase
     /// </summary>
     /// <param name="pagedQuery">Paged query</param>
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResult<int?>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetListIdPaged([FromQuery] PagedQuery pagedQuery)
+    public async Task<PagedResult<int?>> GetListIdPaged([FromQuery] PagedQuery pagedQuery)
     {
         var listIds = await _context.LovMaster
             .Select(i => i.ListId)
@@ -40,38 +38,51 @@ public class LovController : ControllerBase
         
         var pagesCount = (int)Math.Ceiling(itemsCount / (double)pagedQuery.PageSize);
         
-        return Ok(PagedResult<int?>.Succeed(listIds, pagedQuery.PageSize, pagesCount));
+        return PagedResult<int?>.Succeed(listIds, pagedQuery.PageSize, pagesCount);
     }
     
     /// <summary>
     /// Gets list of values filtered by ListId
     /// </summary>
     [HttpGet("{listId:int}")]
-    [ProducesResponseType(typeof(Result<LovDto[]>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetLov(int listId)
+    public async Task<Result<LovDto[]>> GetLov(int listId)
     {
         var lovs = await _context.LovMaster
             .Where(i => i.ListId == listId)
             .Select(i => i.ToDto())
             .ToArrayAsync();
         
-        return Ok(Result<LovDto[]>.Succeed(lovs));
+        return Result<LovDto[]>.Succeed(lovs);
     }
     
     /// <summary>
     /// Batch add list of values
     /// </summary>
-    /// <param name="batchAddLovCommand">The form data.</param>
+    /// <param name="command">The form data.</param>
     [HttpPost]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> AddListOfValues(BatchAddLovCommand batchAddLovCommand)
+    public async Task<Result> AddListOfValues(BatchAddLovCommand command)
     {
-        var lovs = batchAddLovCommand.Lovs.Select(i => i.ToEntity());
+        var lovs = command.Lovs.Select(i => i.ToEntity());
         
         await _context.LovMaster.AddRangeAsync(lovs);
         await _context.SaveChangesAsync();
-        return Ok(Result.Succeed());
+        return Result.Succeed();
     }
+    
+    /// <summary>
+    /// Batch delete list of values
+    /// </summary>
+    /// <param name="command">
+    /// The command containing the list of ListIds to delete
+    /// </param>
+    [HttpDelete]
+    public async Task<Result> DeleteListOfValues(BatchDeleteLovCommand command)
+    {
+        var lovs = _context.LovMaster.Where(i => i.ListId != null && command.ListIds.Contains(i.ListId.Value));
+        
+        _context.LovMaster.RemoveRange(lovs);
+        await _context.SaveChangesAsync();
+        return Result.Succeed();
+    }
+    
 }

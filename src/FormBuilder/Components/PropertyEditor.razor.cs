@@ -40,10 +40,10 @@ public partial class PropertyEditor : ComponentBase
     public EventCallback<Field?> SelectedFieldChanged { get; set; }
     
     /// <summary>
-    /// Event that is triggered when the field type changes.
+    /// Event that is triggered when a field property changes such as label, placeholder, etc.
     /// </summary>
     [Parameter]
-    public EventCallback<FieldTypeChangedArgs> FieldTypeChanged { get; set; }
+    public EventCallback<FieldPropertyChangedArgs> PropertyChanged { get; set; }
 
     #endregion
     
@@ -62,6 +62,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Label = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Label), value));
         }
     }
     
@@ -77,6 +78,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Placeholder = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Placeholder), value));
         }
     }
     
@@ -92,7 +94,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Type = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
-            FieldTypeChanged.InvokeAsync(new FieldTypeChangedArgs(SelectedField, value));
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Type), value));
         }
     }
     
@@ -108,6 +110,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Required = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Required), value));
         }
     }
     
@@ -123,6 +126,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.ReadOnly = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.ReadOnly), value));
         }
     }
     
@@ -138,6 +142,7 @@ public partial class PropertyEditor : ComponentBase
             
             SelectedField.Disabled = value;
             SelectedFieldChanged.InvokeAsync(SelectedField);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Disabled), value));
         }
     }
     
@@ -150,8 +155,25 @@ public partial class PropertyEditor : ComponentBase
             {
                 selectField.ListId = value;
                 SelectedFieldChanged.InvokeAsync(SelectedField);
+                PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(SelectField.ListId), value));
                 _ = FetchListValuesAsync(value);
             }
+        }
+    }
+
+    private bool _listValuesLoading;
+    private bool ListValuesLoading
+    {
+        get => _listValuesLoading;
+        set
+        {
+            if (_listValuesLoading == value)
+            {
+                return;
+            }
+            
+            _listValuesLoading = value;
+            StateHasChanged();
         }
     }
 
@@ -177,19 +199,20 @@ public partial class PropertyEditor : ComponentBase
             return;
         }   
         
+        ListValuesLoading = true;
         var result = await FormService.GetLovAsync(listId.Value);
             
         if (!result.Success || result.Data is null)
         {
             NotificationService.NotifyError(result.Error);
-            return;
+        }
+        else
+        {
+            _listValues = result.Data.Select(x => x.ListValue);
         }
         
-        _listValues = result.Data.Select(x => x.ListValue);
+        ListValuesLoading = false;
     }
 }
 
-/// <summary>
-/// Parameters for the FieldTypeChanged event.
-/// </summary>
-public record FieldTypeChangedArgs(Field Field, FieldType NewType);
+public record FieldPropertyChangedArgs(Field Field, string PropertyName, object? NewValue);

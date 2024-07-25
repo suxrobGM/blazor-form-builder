@@ -33,7 +33,7 @@ public class PagedResult<T> : Result<IEnumerable<T>>
     /// <param name="items">The data to be returned in the PagedResult object</param>
     /// <param name="pageSize">The number of items per page</param>
     /// <param name="pagesCount">The total number of pages</param>
-    public new static PagedResult<T> Succeed(IEnumerable<T>? items, int pageSize, int pagesCount) =>
+    public static PagedResult<T> Succeed(IEnumerable<T>? items, int pageSize, int pagesCount) =>
         new(items, pageSize, pagesCount);
 
     /// <summary>

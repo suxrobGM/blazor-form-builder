@@ -14,7 +14,7 @@
                 <RadzenTextBox @bind-Value="_formDefinition.Name"/>
             </RadzenFormField>
 
-            <DropZone TData="Func<Task>" Drop="@((func) => func())" Zone="FieldsZone">
+            <DropZone TData="Func<Task>" Drop="(func) => func()" Zone="FieldsZone">
                 <RadzenFieldset Text="Fields" Style="max-height: 600px; overflow-y: auto">
                     <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
                         @foreach (var field in _formDefinition.Fields)
@@ -22,15 +22,15 @@
                             <Dragable Data="field" Zone="FieldItemZone">
                                 <DropZone TData="Field"
                                           Zone="FieldItemZone"
-                                          Drop="@((droppingField) => SwapFields(field, droppingField))"
-                                          @onclick="@(() => SelectField(field))">
+                                          Drop="(droppingField) => SwapFields(field, droppingField)"
+                                          @onclick="() => SelectedField = field">
                                     <FormField Field="field" Disabled="true">
                                         <Append>
                                             <RadzenButton
                                                 Icon="delete"
                                                 Size="ButtonSize.Small"
                                                 ButtonStyle="ButtonStyle.Danger"
-                                                Click="@(() => RemoveField(field))">
+                                                Click="() => RemoveField(field)">
                                             </RadzenButton>
                                         </Append>
                                     </FormField>
@@ -51,7 +51,7 @@
         <RadzenStack Class="pt-2" Orientation="Orientation.Vertical">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Fields</RadzenText>
             <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Text Field" Click="@(() => AddField(FieldType.Text))"/>
+                <RadzenButton Class="w-100" Text="Text Field" Click="() => AddField(FieldType.Text)"/>
             </Dragable>
             <Dragable Data="() => AddField(FieldType.NumericInt)" Zone="FieldsZone">
                 <RadzenButton Class="w-100" Text="Integer Field" Click="() => AddField(FieldType.NumericInt)"/>
@@ -69,7 +69,7 @@
         </RadzenStack>
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
-            <PropertyEditor @bind-SelectedField="_selectedField" FieldTypeChanged="(e) => HandleFieldTypeChanged(e)"/>
+            <PropertyEditor @bind-SelectedField="SelectedField" PropertyChanged="(e) => HandleFieldPropertyChanged(e)" />
             <hr/>
             <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="_isLoading"/>
             <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="_isLoading"/>

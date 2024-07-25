@@ -13,7 +13,7 @@ namespace FormBuilder.Components;
 public partial class FormBuilder : ComponentBase
 {
     private FormDefinition _formDefinition = new();
-    private Field? _selectedField;
+    
     private string _formDesignJson = "{}";
     private string? _formId;
     private bool _isLoading;
@@ -28,6 +28,21 @@ public partial class FormBuilder : ComponentBase
     
     [Inject]
     private DialogService DialogService { get; set; } = default!;
+
+    #endregion
+
+    #region Binding Properties
+
+    private Field? _selectedField;
+    private Field? SelectedField
+    {
+        get => _selectedField;
+        set
+        {
+            _selectedField = value;
+            StateHasChanged();
+        }
+    }
 
     #endregion
 
@@ -49,32 +64,36 @@ public partial class FormBuilder : ComponentBase
         var field = FieldFactory.CreateField(fieldType);
         field.Label = fieldType.ToString();
         _formDefinition.Fields.Add(field);
-        SelectField(field);
+        SelectedField = field;
         return UpdateFormDesignJsonAsync();
     }
     
     private Task RemoveField(Field field)
     {
         _formDefinition.Fields.Remove(field);
-        _selectedField = null;
+        SelectedField = null;
+        return UpdateFormDesignJsonAsync();
+    }
+    
+    private Task HandleFieldPropertyChanged(FieldPropertyChangedArgs args)
+    {
+        if (args is { PropertyName: nameof(Field.Type), NewValue: FieldType fieldType })
+        {
+            ChangeFieldType(args.Field, fieldType);
+        }
+        
         return UpdateFormDesignJsonAsync();
     }
 
-    private void SelectField(Field field)
-    {
-        _selectedField = field;
-        StateHasChanged();
-    }
-    
     /// <summary>
     /// Changes the field type if the new field type is different from the current one.
     /// Creates a new field with the new type and copies the properties from the old field.
     /// </summary>
-    /// <param name="args">Event parameters</param>
-    private Task HandleFieldTypeChanged(FieldTypeChangedArgs args)
+    /// <param name="field"></param>
+    /// <param name="newType"></param>
+    private void ChangeFieldType(Field field, FieldType newType)
     {
-        var field = args.Field;
-        var newField = FieldFactory.CreateField(args.NewType);
+        var newField = FieldFactory.CreateField(newType);
         newField.Label = field.Label;
         newField.Placeholder = field.Placeholder;
         newField.Required = field.Required;
@@ -83,8 +102,7 @@ public partial class FormBuilder : ComponentBase
         
         var index = _formDefinition.Fields.IndexOf(field);
         _formDefinition.Fields[index] = newField; // Replace the old field with the new one, old one will be deleted by GC
-        SelectField(newField);
-        return UpdateFormDesignJsonAsync();
+        SelectedField = newField;
     }
     
     private Task SwapFields(Field targetField, Field droppedField)

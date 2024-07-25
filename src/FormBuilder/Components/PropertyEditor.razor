@@ -35,7 +35,7 @@
                 <RadzenLabel Text="Disabled" Component="DisabledInput"/>
             </div>
 
-            @if (SelectedField is SelectField selectField)
+            @if (SelectedField is SelectField)
             {
                 <RadzenFormField Text="List ID">
                     <RadzenDropDown
@@ -49,12 +49,13 @@
                     </RadzenDropDown>
                 </RadzenFormField>
                 
-                @if (selectField.Options.Any())
+                @if (SelectedListId is not null)
                 {
                     <RadzenFormField Text="List Values">
                         <RadzenDropDown
                             TValue="string"
                             Data="_listValues"
+                            Disabled="ListValuesLoading"
                             AllowFiltering="true"
                             AllowClear="true">
                         </RadzenDropDown>
