@@ -22,7 +22,7 @@ Follow these steps to set up and run the Blazor Form Builder:
 ### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [PostgreSQL](https://www.postgresql.org/download/) database installed and running on your machine
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 ### Setup Instructions
 
@@ -36,7 +36,7 @@ Follow these steps to set up and run the Blazor Form Builder:
 
 2. **Configure the Database**
 
-   Update the connection string in the `appsettings.json` file located at `src/FormBuilder.API/appsettings.json` to match your PostgreSQL database configuration.
+   Update the connection string in the `appsettings.json` file located at `src/FormBuilder.API/appsettings.json` to match your SQL Server database configuration.
 
 3. **Apply Database Migrations**
 
@@ -68,6 +68,7 @@ Once the projects are running, you can access them via the following URLs:
 
 ## Project Structure
 
-- **FormBuilder**: The Razor class library containing reusable Blazor components for the form builder.
+- **FormBuilder**: The Razor class library containing reusable Blazor components, services, and models for form creation and rendering.
 - **FormBuilder.API**: The Web API project for managing form data and LOV (List of Values) data.
 - **FormBuilder.DesignerApp**: The Blazor WebAssembly project for designing and rendering forms.
+- **FormBuilder.Shared**: The shared project containing common models used across the `FormBuilder` and `FormBuilder.API` projects.
