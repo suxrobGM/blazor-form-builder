@@ -2,5 +2,5 @@
 
 public record FormBuilderOptions
 {
-    public string? FormApiUrl { get; init; }
+    public string? FormApiHost { get; init; }
 }

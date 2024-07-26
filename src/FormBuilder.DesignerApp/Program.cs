@@ -9,7 +9,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 var formBuilderOptions = new FormBuilderOptions
 {
-    FormApiUrl = builder.Configuration["FormBuilderOptions:FormApiUrl"]
+    FormApiHost = builder.Configuration["FormBuilder:FormApiHost"]
 };
 
 builder.Services.AddFormBuilder(formBuilderOptions);

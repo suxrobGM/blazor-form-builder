@@ -19,16 +19,16 @@ public class FormService
 
     public FormService(FormBuilderOptions options, IMemoryCache cache)
     {
-        if (string.IsNullOrEmpty(options.FormApiUrl))
+        if (string.IsNullOrEmpty(options.FormApiHost))
         {
-            throw new ArgumentException(nameof(options.FormApiUrl));
+            throw new ArgumentException(nameof(options.FormApiHost));
         }
         
         _cache = cache;
 
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(options.FormApiUrl)
+            BaseAddress = new Uri(options.FormApiHost)
         };
 
         _jsonSerializerDefaultOptions = new JsonSerializerOptions
