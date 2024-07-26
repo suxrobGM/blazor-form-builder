@@ -8,17 +8,17 @@ namespace FormBuilder.Models;
 public enum FieldType
 {
     [Description("Text")]
-    Text,
+    Text = 1,
     
     [Description("Numeric (Int)")]
-    NumericInt,
+    NumericInt = 2,
     
     [Description("Numeric (Double)")]
-    NumericDouble,
+    NumericDouble = 3,
     
     [Description("Date")]
-    Date,
+    Date = 4,
     
     [Description("Select (Dropdown)")]
-    Select,
+    Select = 5,
 }

@@ -8,7 +8,7 @@ else if (!string.IsNullOrEmpty(_errorMessage))
 {
     <RadzenText Class="text-danger" Text="@_errorMessage" TextStyle="TextStyle.H6" />
 }
-else
+else if (!string.IsNullOrEmpty(_formDefinition.Id))
 {
     <RadzenTemplateForm TItem="object">
         <RadzenFieldset Text="@GetFormTitle()" Style="max-height: 600px; overflow-y: auto">

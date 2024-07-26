@@ -3,13 +3,13 @@
 <RadzenText TextStyle="TextStyle.H3">Renderer</RadzenText>
 
 <RadzenStack Class="vh-100" Orientation="Orientation.Vertical" Gap="1rem">
-    <FormRenderer ref="@_formRendererRef" @bind-IsLoadingForm="_isLoading" />
+    <FormRenderer @ref="_formRendererRef" @bind-IsLoadingForm="_isLoading" />
 
     <RadzenText TextStyle="TextStyle.Subtitle1">
         Specify either Form ID or JSON design to load into renderer
     </RadzenText>
     
-    <RadzenTemplateForm TItem="InputModel" Submit="() => LoadFormAsync()">
+    <RadzenTemplateForm TItem="InputModel" Data="_input" Submit="() => LoadFormAsync()">
         <RadzenStack Orientation="Orientation.Vertical">
             <RadzenFormField Text="Form ID">
                 <RadzenTextBox @bind-Value="_input.FormId" Disabled="_isLoading"/>

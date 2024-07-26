@@ -10,7 +10,7 @@ namespace FormBuilder.Components;
 /// <summary>
 /// Component that allows building forms by adding and removing inputs.
 /// </summary>
-public partial class FormBuilder : ComponentBase
+public partial class FormEditor : ComponentBase
 {
     private FormDefinition _formDefinition = new();
     private string _formDesignJson = "{}";
