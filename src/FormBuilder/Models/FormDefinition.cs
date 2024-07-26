@@ -8,6 +8,11 @@ namespace FormBuilder.Models;
 public class FormDefinition
 {
     /// <summary>
+    /// Form ID
+    /// </summary>
+    public string? Id { get; set; }
+    
+    /// <summary>
     /// Form name. Will be generated if not provided.
     /// </summary>
     public string Name { get; set; } = Generator.GenerateShortId("form_");

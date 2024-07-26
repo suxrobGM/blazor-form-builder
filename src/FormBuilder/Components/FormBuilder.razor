@@ -3,10 +3,10 @@
 <RadzenRow Class="vh-100">
     <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
-            @if (_formId is not null)
+            @if (_formDefinition.Id is not null)
             {
                 <RadzenFormField Text="Form ID">
-                    <RadzenTextBox Value="@_formId" ReadOnly="true"/>
+                    <RadzenTextBox Value="@_formDefinition.Id" ReadOnly="true"/>
                 </RadzenFormField>
             }
 
@@ -71,8 +71,8 @@
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
             <PropertyEditor @bind-SelectedField="SelectedField" PropertyChanged="(e) => HandleFieldPropertyChanged(e)" />
             <hr/>
-            <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="_isLoading"/>
-            <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="_isLoading"/>
+            <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
+            <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="IsLoading"/>
         </RadzenStack>
     </RadzenColumn>
 </RadzenRow>

@@ -1,4 +1,5 @@
 ﻿using FormBuilder.API.Configurations;
+using FormBuilder.API.Services;
 using Serilog;
 
 namespace FormBuilder.API;
@@ -12,6 +13,8 @@ public static class Startup
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
         builder.ConfigureDatabase();
+        builder.Services.AddScoped<FormService>();
+        builder.Services.AddScoped<LovService>();
         return builder.Build();
     }
 

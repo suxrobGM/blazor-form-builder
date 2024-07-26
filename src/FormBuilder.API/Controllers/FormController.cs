@@ -1,9 +1,6 @@
-﻿using FormBuilder.API.Data;
-using FormBuilder.API.Entities;
-using FormBuilder.API.Mappers;
+﻿using FormBuilder.API.Services;
 using FormBuilder.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilder.API.Controllers;
 
@@ -11,11 +8,11 @@ namespace FormBuilder.API.Controllers;
 [ApiController]
 public class FormController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly FormService _formService;
     
-    public FormController(ApplicationDbContext context)
+    public FormController(FormService formService)
     {
-        _context = context;
+        _formService = formService;
     }
     
     /// <summary>
@@ -23,18 +20,10 @@ public class FormController : ControllerBase
     /// </summary>
     /// <param name="pagedQuery">Paged query</param>
     [HttpGet]
-    public async Task<PagedResult<FormDto>> GetFormsPaged([FromQuery] PagedQuery pagedQuery)
+    public async Task<ActionResult<PagedResult<FormDto>>> GetFormsPaged([FromQuery] PagedQuery pagedQuery)
     {
-        var forms = await _context.Forms
-            .Skip((pagedQuery.Page - 1) * pagedQuery.PageSize)
-            .Take(pagedQuery.PageSize)
-            .Select(i => i.ToDto())
-            .ToArrayAsync();
-        
-        var itemsCount = await _context.Forms.CountAsync();
-        var pagesCount = (int)Math.Ceiling(itemsCount / (double)pagedQuery.PageSize);
-        
-        return PagedResult<FormDto>.Succeed(forms, pagedQuery.PageSize, pagesCount);
+        var result = await _formService.GetFormsPagedAsync(pagedQuery);
+        return result.Success ? Ok(result) : BadRequest(result);
     }
     
     /// <summary>
@@ -46,14 +35,8 @@ public class FormController : ControllerBase
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Result<FormDto>>> GetFormById(string id)
     {
-        var form = await _context.Forms.FindAsync(id);
-        
-        if (form is null)
-        {
-            return BadRequest(Result.Fail($"Form with id {id} not found"));
-        }
-        
-        return Result<FormDto>.Succeed(form.ToDto());
+        var result = await _formService.GetFormByIdAsync(id);
+        return result.Success ? Ok(result) : BadRequest(result);
     }
     
     /// <summary>
@@ -65,25 +48,8 @@ public class FormController : ControllerBase
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Result<FormDto>>> CreateForm(CreateFormCommand formCommand)
     {
-        if (string.IsNullOrEmpty(formCommand.FormName))
-        {
-            return BadRequest(Result.Fail("Form name is required"));
-        }
-        
-        if (string.IsNullOrEmpty(formCommand.FormDesign))
-        {
-            return BadRequest(Result.Fail("Form design is required"));
-        }
-        
-        var newForm = new Form
-        {
-            FormName = formCommand.FormName,
-            FormDesign = formCommand.FormDesign
-        };
-        
-        _context.Forms.Add(newForm);
-        await _context.SaveChangesAsync();
-        return Result<FormDto>.Succeed(newForm.ToDto());
+        var result = await _formService.CreateFormAsync(formCommand);
+        return result.Success ? Ok(result) : BadRequest(result);
     }
     
     /// <summary>
@@ -96,26 +62,8 @@ public class FormController : ControllerBase
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Result>> UpdateForm(string id, UpdateFormCommand formCommand)
     {
-        var existingForm = await _context.Forms.FindAsync(id);
-        
-        if (existingForm is null)
-        {
-            return BadRequest(Result<Form>.Fail($"Form with ID {id} not found"));
-        }
-        
-        if (!string.IsNullOrEmpty(formCommand.FormName) && formCommand.FormName != existingForm.FormName)
-        {
-            existingForm.FormName = formCommand.FormName;
-        }
-        
-        if (!string.IsNullOrEmpty(formCommand.FormDesign) && formCommand.FormDesign != existingForm.FormDesign)
-        {
-            existingForm.FormDesign = formCommand.FormDesign;
-        }
-        
-        _context.Update(existingForm);
-        await _context.SaveChangesAsync();
-        return Result.Succeed();
+        var result = await _formService.UpdateFormAsync(id, formCommand);
+        return result.Success ? Ok(result) : BadRequest(result);
     }
     
     /// <summary>
@@ -127,15 +75,7 @@ public class FormController : ControllerBase
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Result>> DeleteForm(string id)
     {
-        var existingForm = await _context.Forms.FindAsync(id);
-        
-        if (existingForm is null)
-        {
-            return BadRequest(Result.Fail($"Form with ID {id} not found"));
-        }
-        
-        _context.Forms.Remove(existingForm);
-        await _context.SaveChangesAsync();
-        return Result.Succeed();
+        var result = await _formService.DeleteFormAsync(id);
+        return result.Success ? Ok(result) : BadRequest(result);
     }
 }

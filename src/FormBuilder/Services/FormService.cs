@@ -61,7 +61,7 @@ public class FormService
     /// <returns>
     /// FormDefinition object if deserialization is successful, otherwise null.
     /// </returns>
-    public FormDefinition? DeserializeFormDesign(string formDesign)
+    public FormDefinition? DeserializeForm(string formDesign)
     {
         try
         {
@@ -83,7 +83,7 @@ public class FormService
     /// <returns>
     /// FormDefinition object if deserialization is successful, otherwise null.
     /// </returns>
-    public async Task<FormDefinition?> DeserializeFormDesignAsync(string formDesign)
+    public async Task<FormDefinition?> DeserializeFormAsync(string formDesign)
     {
         try
         {
@@ -105,7 +105,7 @@ public class FormService
     /// </param>
     /// <param name="indented">True to indent the JSON string; otherwise, false.</param>
     /// <returns>Serialized JSON string of the FormDefinition object.</returns>
-    public string SerializeFormDesign(FormDefinition formDefinition, bool indented = false)
+    public string SerializeForm(FormDefinition formDefinition, bool indented = false)
     {
         return JsonSerializer.Serialize(formDefinition,
             indented ? _jsonSerializerIndentedOptions : _jsonSerializerDefaultOptions);
@@ -117,7 +117,7 @@ public class FormService
     /// <param name="formDefinition">FormDefinition object to serialize.</param>
     /// <param name="indented">True to indent the JSON string; otherwise, false.</param>
     /// <returns>Serialized JSON string of the FormDefinition object.</returns>
-    public async Task<string> SerializeFormDesignAsync(FormDefinition formDefinition, bool indented = false)
+    public async Task<string> SerializeFormAsync(FormDefinition formDefinition, bool indented = false)
     {
         using var ms = new MemoryStream();
         await JsonSerializer.SerializeAsync(ms, formDefinition,
@@ -137,7 +137,7 @@ public class FormService
 
     public async Task<Result<FormDto>> CreateFormAsync(FormDefinition formDefinition)
     {
-        var formDesign = await SerializeFormDesignAsync(formDefinition);
+        var formDesign = await SerializeFormAsync(formDefinition);
         var createFormDto = new CreateFormCommand
         {
             FormName = formDefinition.Name,
@@ -150,7 +150,7 @@ public class FormService
 
     public async Task<Result> UpdateFormAsync(string id, FormDefinition formDefinition)
     {
-        var formDesign = await SerializeFormDesignAsync(formDefinition);
+        var formDesign = await SerializeFormAsync(formDefinition);
         var updateFormDto = new CreateFormCommand
         {
             FormName = formDefinition.Name,

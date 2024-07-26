@@ -11,8 +11,8 @@ if "%MigrationName%" == "" (
     goto prompt
 )
 
-echo Running migration for PostgreSQL...
-dotnet ef migrations add %MigrationName% --project ../src/FormBuilder.API
+echo Running migration for SQL Server...
+dotnet ef migrations add %MigrationName%
 
 echo Migrations completed.
 

@@ -1,6 +1,6 @@
 @echo off
 
-cd ../src/FormBuilder.API
+cd ../
 echo Applying migrations...
 dotnet ef database update
 

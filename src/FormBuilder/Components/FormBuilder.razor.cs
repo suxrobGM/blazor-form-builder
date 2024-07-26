@@ -14,8 +14,6 @@ public partial class FormBuilder : ComponentBase
 {
     private FormDefinition _formDefinition = new();
     private string _formDesignJson = "{}";
-    private string? _formId;
-    private bool _isLoading;
 
     #region Injected Services
 
@@ -42,6 +40,22 @@ public partial class FormBuilder : ComponentBase
             StateHasChanged();
         }
     }
+    
+    private bool _isLoading;
+    private bool IsLoading
+    {
+        get => _isLoading;
+        set
+        {
+            if (_isLoading == value)
+            {
+                return;
+            }
+            
+            _isLoading = value;
+            StateHasChanged();
+        }
+    }
 
     #endregion
 
@@ -55,7 +69,7 @@ public partial class FormBuilder : ComponentBase
     /// </summary>
     private async Task UpdateFormDesignJsonAsync()
     {
-        _formDesignJson = await FormService.SerializeFormDesignAsync(_formDefinition, true);
+        _formDesignJson = await FormService.SerializeFormAsync(_formDefinition, true);
     }
 
     private Task AddField(FieldType fieldType)
@@ -121,18 +135,16 @@ public partial class FormBuilder : ComponentBase
             return;
         }
         
-        _isLoading = true;
+        IsLoading = true;
         Result result;
         
-        if (string.IsNullOrEmpty(_formId))
+        if (string.IsNullOrEmpty(_formDefinition.Id))
         {
-            var createFormResult = await FormService.CreateFormAsync(_formDefinition);
-            result = createFormResult;
-            _formId = createFormResult is { Success: true, Data: not null } ? createFormResult.Data.Id : null;
+            result = await CreateNewFormAsync();
         }
         else
         {
-            result = await FormService.UpdateFormAsync(_formId, _formDefinition);
+            result = await FormService.UpdateFormAsync(_formDefinition.Id, _formDefinition);
         }
         
         if (result.Success)
@@ -144,7 +156,7 @@ public partial class FormBuilder : ComponentBase
             NotificationService.NotifyError(result.Error);
         }
         
-        _isLoading = false;
+        IsLoading = false;
     }
 
     private Task OpenLoadFormDialogAsync()
@@ -157,8 +169,24 @@ public partial class FormBuilder : ComponentBase
     
     private Task LoadForm(FormLoadedEventArgs args)
     {
-        _formId = args.FormId;
         _formDefinition = args.FormDefinition;
         return UpdateFormDesignJsonAsync();
+    }
+    
+    /// <summary>
+    /// Sends a request to the server to create a new form.
+    /// </summary>
+    /// <returns>Operation result</returns>
+    private async Task<Result> CreateNewFormAsync()
+    {
+        var createFormResult = await FormService.CreateFormAsync(_formDefinition);
+
+        if (createFormResult is { Success: true, Data: not null })
+        {
+            _formDefinition.Id = createFormResult.Data.Id;
+            await UpdateFormDesignJsonAsync();
+        }
+
+        return createFormResult;
     }
 }

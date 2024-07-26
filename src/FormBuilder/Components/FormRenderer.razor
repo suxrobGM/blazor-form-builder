@@ -1,11 +1,23 @@
-﻿<RadzenTemplateForm TItem="object">
-    <RadzenFieldset Text="@GetFormTitle()" Style="max-height: 600px; overflow-y: auto">
-        <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
-            @foreach (var field in _formDefinition.Fields)
-            {
-            <FormField Field="field">
-            </FormField>
-            }
-        </RadzenStack>
-    </RadzenFieldset>
-</RadzenTemplateForm>
+﻿@if (IsLoading)
+{
+    <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Value="100">
+        <Template>Loading form</Template>
+    </RadzenProgressBarCircular>
+}
+else if (!string.IsNullOrEmpty(_errorMessage))
+{
+    <RadzenText Class="text-danger" Text="@_errorMessage" TextStyle="TextStyle.H6" />
+}
+else
+{
+    <RadzenTemplateForm TItem="object">
+        <RadzenFieldset Text="@GetFormTitle()" Style="max-height: 600px; overflow-y: auto">
+            <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                @foreach (var field in _formDefinition.Fields)
+                {
+                    <FormField Field="field" />
+                }
+            </RadzenStack>
+        </RadzenFieldset>
+    </RadzenTemplateForm>
+}

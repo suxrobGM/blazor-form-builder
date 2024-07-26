@@ -9,8 +9,7 @@ namespace FormBuilder.Components;
 public partial class LoadFormDialog : ComponentBase
 {
     private FormDto _formModel = new();
-    private bool _isLoading;
-
+    
     #region Injected Servicse
 
     [Inject]
@@ -28,6 +27,26 @@ public partial class LoadFormDialog : ComponentBase
     public EventCallback<FormLoadedEventArgs> FormLoaded { get; set; }
 
     #endregion
+
+    #region Binding Properties
+
+    private bool _isLoading;
+    private bool IsLoading
+    {
+        get => _isLoading;
+        set
+        {
+            if (_isLoading == value)
+            {
+                return;
+            }
+
+            _isLoading = value;
+            StateHasChanged();
+        }
+    }
+
+    #endregion
     
     private bool EitherIdOrDesignRequired()
     {
@@ -41,7 +60,7 @@ public partial class LoadFormDialog : ComponentBase
             return true; // No form design to validate
         }
         
-        var formDefinition = FormService.DeserializeFormDesign(_formModel.FormDesign);
+        var formDefinition = FormService.DeserializeForm(_formModel.FormDesign);
         return formDefinition is not null;
     }
     
@@ -62,7 +81,7 @@ public partial class LoadFormDialog : ComponentBase
     
     private async Task LoadFormByIdAsync(string id)
     {
-        _isLoading = true;
+        IsLoading = true;
         _formModel.Id = id;
         var result = await FormService.GetFormByIdAsync(_formModel.Id);
         
@@ -75,12 +94,12 @@ public partial class LoadFormDialog : ComponentBase
             NotificationService.NotifyError(result.Error!);
         }
         
-        _isLoading = false;
+        IsLoading = false;
     }
     
     private async Task HandleFormDeserialization(string formDesign, string? id)
     {
-        var formDefinition = await FormService.DeserializeFormDesignAsync(formDesign);
+        var formDefinition = await FormService.DeserializeFormAsync(formDesign);
         if (formDefinition != null)
         {
             await FormLoaded.InvokeAsync(new FormLoadedEventArgs(id, formDefinition));
