@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "FormBuilder.DesignerApp",
   "resources": {
-    "hash": "sha256-gbImDgc4VwlY0uMtVW/lMQotfd5qdmURIDqBu9oMC2I=",
+    "hash": "sha256-ZKxRESKdwYzl56JCUQchr30HUlB5C5LLGr4MYCYcL2Y=",
     "jsModuleNative": {
       "dotnet.native.8.0.7.sy51k63m6a.js": "sha256-EVGOQfWsQdDL8HWoHlQF8hq2wndDY0772tR/cA+SlAM="
     },
@@ -17,9 +17,9 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "FormBuilder.DesignerApp.wasm": "sha256-+sysJLcn6CfeAQ8YcgWN1ykMfNr/DXs881DBjnWgl9I=",
-      "FormBuilder.Shared.wasm": "sha256-9iiUhnLoz7objxzp/6WSLEghZkGLsW5ayTRFDNqBxss=",
-      "FormBuilder.wasm": "sha256-OgmkGVE4Nnq1v6C1AOLG/n18fYF0fMuZnsQcWi0DZjs=",
+      "FormBuilder.DesignerApp.wasm": "sha256-hCNcp0VGalyxRMVLVlfKYXK0VAIdCidTDmCNkTuD8Ik=",
+      "FormBuilder.Shared.wasm": "sha256-4NW3mWrQZ5VxByXxE48bNUbg1q6UhxS6/Xz9JK6+cZk=",
+      "FormBuilder.wasm": "sha256-NzD88t1rZlqwsorJkBZewHYtQOV+2s3PTRyOBczvkRQ=",
       "Humanizer.wasm": "sha256-4NbSboZzzP9nikRtXapUZNzOyITt7ht9TNqCIQHr5OE=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-8+GP8sUuFhXNMn9m0iWawXbNnFcCPm3t8AErALlVl7M=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-AP1v2E3r90cGmKmjXj45NQ3l8d9579ApuGoPBd8fXz8=",
@@ -45,7 +45,7 @@
       "System.Collections.NonGeneric.wasm": "sha256-LohKVl/+AV5sJj2Lp+SQ7sfTGOe1HEAFkuzO88Eb/IU=",
       "System.Collections.Specialized.wasm": "sha256-Eqez552/w6bY+sF2jDU6jPbp8u1D2qU17c+F6QyOfxE=",
       "System.Collections.wasm": "sha256-g1qv2iviq1NswpJ2H8uR41vQQrR8KiIkJb9Yca3VjLA=",
-      "System.ComponentModel.Annotations.wasm": "sha256-wcH+35xz7R7IC9GFDSgiqyPQnearATtI/R4wHbBXE0g=",
+      "System.ComponentModel.Annotations.wasm": "sha256-LQsLTxqGX8GkZAgo2OXk716tYmyaRdg73hrjjWCdGsk=",
       "System.ComponentModel.Primitives.wasm": "sha256-tndZvYUIjWG4IMF44xr3456KP06RT1lw/JM89NGZLgM=",
       "System.ComponentModel.TypeConverter.wasm": "sha256-kGE+LOLtG2TpobJRTsoZI636Lsi2vJxSn+NEs88+BP4=",
       "System.ComponentModel.wasm": "sha256-nuUzMLQhd7bkS35ceFD8NLkfVFuvHOZ10Ia//q+ma0o=",

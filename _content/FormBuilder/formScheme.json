@@ -1,6 +1,9 @@
 ﻿{
   "type": "object",
   "properties": {
+    "id": {
+      "type": "string"
+    },
     "name": {
       "type": "string"
     },
@@ -49,5 +52,5 @@
       }
     }
   },
-  "required": ["name", "fields"]
+  "required": ["id", "name", "fields"]
 }
