@@ -72,3 +72,8 @@ Once the projects are running, you can access them via the following URLs:
 - **FormBuilder.API**: The Web API project for managing form data and LOV (List of Values) data.
 - **FormBuilder.DesignerApp**: The Blazor WebAssembly project for designing and rendering forms.
 - **FormBuilder.Shared**: The shared project containing common models used across the `FormBuilder` and `FormBuilder.API` projects.
+
+## Documentation
+- **[API Reference](docs/api-reference.md)**: Learn how to use the Form Builder API to create, update, delete, and retrieve forms and LOV data.
+- **[Integration Guide](docs/integration-guide.md)**: Integrate the Blazor Form Builder with your existing Blazor application.
+- **[Form Renderer Component Reference](docs/form-renderer.md)**: Render forms in your Blazor application using the `FormRenderer` component.

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FormBuilder.Shared.Models;
 using Microsoft.OpenApi.Models;
 
 namespace FormBuilder.API.Configurations;
@@ -21,8 +22,18 @@ public static class SwaggerConfiguration
                 Version = "v1"
             });
             
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            // Include XML comments from the current assembly
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+            
+            // Include XML comments from the shared assembly
+            var modelsXmlFile = $"{Assembly.GetAssembly(typeof(PagedQuery))?.GetName().Name}.xml";
+            var modelsXmlPath = Path.Combine(AppContext.BaseDirectory, modelsXmlFile);
+            
+            if (File.Exists(modelsXmlPath))
+            {
+                options.IncludeXmlComments(modelsXmlPath);
+            }
         });
     }
 }
