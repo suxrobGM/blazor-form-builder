@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "FormBuilder.DesignerApp",
   "resources": {
-    "hash": "sha256-vtoWp73oogCH5jqLZ1wVMPs7MZ16Y3ViDfuPQ0ePoAE=",
+    "hash": "sha256-x7Np3hieKddxon15px9A8kM2Bpg+MqxgV+c3nEhByLc=",
     "jsModuleNative": {
       "dotnet.native.8.0.7.sy51k63m6a.js": "sha256-EVGOQfWsQdDL8HWoHlQF8hq2wndDY0772tR/cA+SlAM="
     },
@@ -17,9 +17,9 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "FormBuilder.DesignerApp.wasm": "sha256-SShOuf0DhZzSXnzDMaodKVSoz8O5rWwMq/tWtveba10=",
-      "FormBuilder.Shared.wasm": "sha256-8scHVGw16S4ihYT+8Mr9gRCjG9wExpXbAsLaZ9I2ISI=",
-      "FormBuilder.wasm": "sha256-RM8xMQzLyXTi7nTX44r+kFG6TBy//Km5PKuUxn/XyqM=",
+      "FormBuilder.DesignerApp.wasm": "sha256-YlMT5Xm7Z/SrLYiHbvftDa6dgIBVZyPm8+AYzCw4yr4=",
+      "FormBuilder.Shared.wasm": "sha256-rfh1M5VcqUb6OrRRN7X9IEPvxYQIdG3M1hnsbY/dEb8=",
+      "FormBuilder.wasm": "sha256-wy9U9U/encUif7cH3dqyACHl9HVcyU8FCkdVepsXv+k=",
       "Humanizer.wasm": "sha256-4NbSboZzzP9nikRtXapUZNzOyITt7ht9TNqCIQHr5OE=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-8+GP8sUuFhXNMn9m0iWawXbNnFcCPm3t8AErALlVl7M=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-AP1v2E3r90cGmKmjXj45NQ3l8d9579ApuGoPBd8fXz8=",
