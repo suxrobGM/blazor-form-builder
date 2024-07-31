@@ -1,0 +1,19 @@
+﻿@typeparam TValue where TValue : struct
+
+<RadzenFormField Text="Min">
+    <RadzenNumeric TValue="decimal?" Value="Field.Min" ValueChanged="OnMinChanged"/>
+</RadzenFormField>
+<RadzenFormField Text="Max">
+    <RadzenNumeric TValue="decimal?" Value="Field.Max" ValueChanged="OnMaxChanged"/>
+</RadzenFormField>
+<RadzenFormField Text="Step">
+    <RadzenNumeric TValue="decimal" />
+</RadzenFormField>
+<div>
+    <RadzenCheckBox TValue="bool" Name="ShowUpDownInput" Value="Field.ShowUpDown" ValueChanged="OnShowUpDownChanged"/>
+    <RadzenLabel Component="ShowUpDownInput" Text="Show Up Down" />
+</div>
+
+<RadzenFormField Text="Format">
+    <RadzenTextBox Value="@Field.Format" ValueChanged="OnFormatChanged"/>
+</RadzenFormField>
