@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using FormBuilder.Models;
 
-namespace FormBuilder.Utils;
+namespace FormBuilder.Converters;
 
 internal class FieldJsonConverter : JsonConverter<Field>
 {
@@ -26,8 +26,8 @@ internal class FieldJsonConverter : JsonConverter<Field>
         Field? field = enumFieldType switch
         {
             FieldType.Text => JsonSerializer.Deserialize<TextField>(rootElement.GetRawText(), options),
-            FieldType.NumericInt => JsonSerializer.Deserialize<NumericIntField>(rootElement.GetRawText(), options),
-            FieldType.NumericDouble => JsonSerializer.Deserialize<NumericDoubleField>(rootElement.GetRawText(), options),
+            FieldType.NumericInt => JsonSerializer.Deserialize<NumericField<int>>(rootElement.GetRawText(), options),
+            FieldType.NumericDecimal => JsonSerializer.Deserialize<NumericField<decimal>>(rootElement.GetRawText(), options),
             FieldType.Select => JsonSerializer.Deserialize<SelectField>(rootElement.GetRawText(), options),
             FieldType.Date => JsonSerializer.Deserialize<DateField>(rootElement.GetRawText(), options),
             _ => throw new NotSupportedException($"The value of the field type '{enumFieldType}' is not supported"),

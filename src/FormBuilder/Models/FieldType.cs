@@ -13,8 +13,8 @@ public enum FieldType
     [Description("Numeric (Int)")]
     NumericInt = 2,
     
-    [Description("Numeric (Double)")]
-    NumericDouble = 3,
+    [Description("Numeric (Decimal)")]
+    NumericDecimal = 3,
     
     [Description("Date")]
     Date = 4,

@@ -2,14 +2,14 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FormBuilder.Converters;
 using FormBuilder.Models;
 using FormBuilder.Shared.Models;
-using FormBuilder.Utils;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace FormBuilder.Services;
 
-public class FormService
+internal class FormService
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonSerializerDefaultOptions;

@@ -6,8 +6,6 @@
 /// </summary>
 public class DateField : Field<DateTime?>
 {
-    public DateField()
-    {
-        Type = FieldType.Date;
-    }
+    public override FieldType Type => FieldType.Date;
+    public string? DateFormat { get; set; }
 }

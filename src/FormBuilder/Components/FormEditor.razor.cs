@@ -92,7 +92,7 @@ public partial class FormEditor : ComponentBase
     {
         if (args is { PropertyName: nameof(Field.Type), NewValue: FieldType fieldType })
         {
-            ChangeFieldType(args.Field, fieldType);
+            ChangeFieldType(fieldType, args.Field);
         }
         
         return UpdateFormDesignJsonAsync();
@@ -102,18 +102,12 @@ public partial class FormEditor : ComponentBase
     /// Changes the field type if the new field type is different from the current one.
     /// Creates a new field with the new type and copies the properties from the old field.
     /// </summary>
-    /// <param name="field"></param>
+    /// <param name="oldField"></param>
     /// <param name="newType"></param>
-    private void ChangeFieldType(Field field, FieldType newType)
+    private void ChangeFieldType(FieldType newType, Field oldField)
     {
-        var newField = FieldFactory.CreateField(newType);
-        newField.Label = field.Label;
-        newField.Placeholder = field.Placeholder;
-        newField.Required = field.Required;
-        newField.ReadOnly = field.ReadOnly;
-        newField.Disabled = field.Disabled;
-        
-        var index = _formDefinition.Fields.IndexOf(field);
+        var newField = FieldFactory.CreateFieldFrom(newType, oldField);
+        var index = _formDefinition.Fields.IndexOf(oldField);
         _formDefinition.Fields[index] = newField; // Replace the old field with the new one, old one will be deleted by GC
         SelectedField = newField;
     }

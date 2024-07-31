@@ -1,4 +1,4 @@
-﻿@using global::FormBuilder.Models
+﻿@using FormBuilder.Models
 
 <RadzenRow Class="vh-100">
     <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
@@ -56,8 +56,8 @@
             <Dragable Data="() => AddField(FieldType.NumericInt)" Zone="FieldsZone">
                 <RadzenButton Class="w-100" Text="Integer Field" Click="() => AddField(FieldType.NumericInt)"/>
             </Dragable>
-            <Dragable Data="() => AddField(FieldType.NumericDouble)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Decimal Field" Click="() => AddField(FieldType.NumericDouble)"/>
+            <Dragable Data="() => AddField(FieldType.NumericDecimal)" Zone="FieldsZone">
+                <RadzenButton Class="w-100" Text="Decimal Field" Click="() => AddField(FieldType.NumericDecimal)"/>
             </Dragable>
             <Dragable Data="() => AddField(FieldType.Date)" Zone="FieldsZone">
                 <RadzenButton Class="w-100" Text="Date Field" Click="() => AddField(FieldType.Date)"/>
@@ -69,7 +69,10 @@
         </RadzenStack>
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
             <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
-            <PropertyEditor @bind-SelectedField="SelectedField" PropertyChanged="(e) => HandleFieldPropertyChanged(e)" />
+            <FieldPropertyEditor 
+                @bind-Field="SelectedField" 
+                PropertyChanged="(e) => HandleFieldPropertyChanged(e)">
+            </FieldPropertyEditor>
             <hr/>
             <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
             <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="IsLoading"/>

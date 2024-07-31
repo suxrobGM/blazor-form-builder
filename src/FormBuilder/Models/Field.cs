@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using FormBuilder.Converters;
 using FormBuilder.Utils;
 
 namespace FormBuilder.Models;
@@ -7,20 +8,26 @@ namespace FormBuilder.Models;
 /// Represents a model for the form field.
 /// </summary>
 [JsonConverter(typeof(FieldJsonConverter))]
-public class Field
+public abstract class Field
 {
-    public Field()
-    {
-        if (string.IsNullOrEmpty(Name))
-        {
-            Name = Generator.GenerateShortId($"{Type}_".ToLower());
-        }
-    }
-    
+    private string? _name;
+
     /// <summary>
     /// Field name. If not provided, it will be generated.
     /// </summary>
-    public string Name { get; set; }
+    public string Name
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_name))
+            {
+                _name = Generator.GenerateShortId($"{Type}_".ToLower());
+            }
+
+            return _name;
+        }
+        set => _name = value;
+    }
     
     /// <summary>
     /// Field label.
@@ -33,14 +40,9 @@ public class Field
     public string? Placeholder { get; set; }
     
     /// <summary>
-    /// Field type such as TextField, NumericIntField, NumericDoubleField, SelectField, DateField.
+    /// Field type such as TextField, NumericIntField, NumericDecimalField, SelectField, DateField.
     /// </summary>
-    public FieldType Type { get; set; }
-    
-    /// <summary>
-    /// Determines if the field is required to be filled.
-    /// </summary>
-    public bool Required { get; set; }
+    public abstract FieldType Type { get; }
     
     /// <summary>
     /// Whether the field is read-only.
@@ -51,13 +53,23 @@ public class Field
     /// Whether the field is disabled.
     /// </summary>
     public bool Disabled { get; set; }
+    
+    /// <summary>
+    /// The hint text to be displayed below the field.
+    /// </summary>
+    public string? Hint { get; set; }
+    
+    /// <summary>
+    /// List of validators to be applied to the field.
+    /// </summary>
+    public List<Validator> Validators { get; set; } = [];
 }
 
 /// <summary>
 /// Generic version of the field model with a value of type T.
 /// </summary>
 /// <typeparam name="T">The type of the field value.</typeparam>
-public class Field<T> : Field
+public abstract class Field<T> : Field
 {
     public T? Value { get; set; }
 }

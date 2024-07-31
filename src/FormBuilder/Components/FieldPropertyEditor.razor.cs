@@ -8,12 +8,13 @@ namespace FormBuilder.Components;
 /// <summary>
 /// Component that allows editing of field properties in the form builder.
 /// </summary>
-public partial class PropertyEditor : ComponentBase
+public partial class FieldPropertyEditor : ComponentBase
 {
     private DropDownEnumItem<FieldType>[] _inputTypes = DropDownEnumItem.CreateItems<FieldType>();
     private IEnumerable<string?> _listValues = [];
     private IEnumerable<int> _listIds = [];
     private int _listIdCount;
+    private bool _fetchedInitialListIds;
 
     #region Injected Services
 
@@ -31,13 +32,13 @@ public partial class PropertyEditor : ComponentBase
     /// The currently selected field to edit.
     /// </summary>
     [Parameter]
-    public Field? SelectedField { get; set; }
+    public Field? Field { get; set; }
     
     /// <summary>
     /// Event that is triggered when the selected field's property changes.
     /// </summary>
     [Parameter]
-    public EventCallback<Field?> SelectedFieldChanged { get; set; }
+    public EventCallback<Field?> FieldChanged { get; set; }
     
     /// <summary>
     /// Event that is triggered when a field property changes such as label, placeholder, etc.
@@ -52,110 +53,93 @@ public partial class PropertyEditor : ComponentBase
     
     private string? Label
     {
-        get => SelectedField?.Label;
+        get => Field?.Label;
         set
         {
-            if (SelectedField is null || SelectedField.Label == value)
+            if (Field is null || Field.Label == value)
             {
                 return;
             }
             
-            SelectedField.Label = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Label), value));
+            Field.Label = value;
+            FieldChanged.InvokeAsync(Field);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(Models.Field.Label), value));
         }
     }
     
     private string? Placeholder
     {
-        get => SelectedField?.Placeholder;
+        get => Field?.Placeholder;
         set
         {
-            if (SelectedField is null || SelectedField.Placeholder == value)
+            if (Field is null || Field.Placeholder == value)
             {
                 return;
             }
             
-            SelectedField.Placeholder = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Placeholder), value));
+            Field.Placeholder = value;
+            FieldChanged.InvokeAsync(Field);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(Models.Field.Placeholder), value));
         }
     }
     
     private FieldType InputType
     {
-        get => SelectedField?.Type ?? FieldType.Text;
+        get => Field?.Type ?? FieldType.Text;
         set
         {
-            if (SelectedField is null || SelectedField.Type == value)
+            if (Field is null || Field.Type == value)
             {
                 return;
             }
             
-            SelectedField.Type = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Type), value));
-        }
-    }
-    
-    private bool Required
-    {
-        get => SelectedField?.Required ?? false;
-        set
-        {
-            if (SelectedField is null || SelectedField.Required == value)
-            {
-                return;
-            }
-            
-            SelectedField.Required = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Required), value));
+            FieldChanged.InvokeAsync(Field);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(Models.Field.Type), value));
         }
     }
     
     private bool ReadOnly
     {
-        get => SelectedField?.ReadOnly ?? false;
+        get => Field?.ReadOnly ?? false;
         set
         {
-            if (SelectedField is null || SelectedField.ReadOnly == value)
+            if (Field is null || Field.ReadOnly == value)
             {
                 return;
             }
             
-            SelectedField.ReadOnly = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.ReadOnly), value));
+            Field.ReadOnly = value;
+            FieldChanged.InvokeAsync(Field);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(Models.Field.ReadOnly), value));
         }
     }
     
     private bool Disabled
     {
-        get => SelectedField?.Disabled ?? false;
+        get => Field?.Disabled ?? false;
         set
         {
-            if (SelectedField is null || SelectedField.Disabled == value)
+            if (Field is null || Field.Disabled == value)
             {
                 return;
             }
             
-            SelectedField.Disabled = value;
-            SelectedFieldChanged.InvokeAsync(SelectedField);
-            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(Field.Disabled), value));
+            Field.Disabled = value;
+            FieldChanged.InvokeAsync(Field);
+            PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(Models.Field.Disabled), value));
         }
     }
     
     private int? SelectedListId
     {
-        get => (SelectedField as SelectField)?.ListId;
+        get => (Field as SelectField)?.ListId;
         set
         {
-            if (SelectedField is SelectField selectField && selectField.ListId != value)
+            if (Field is SelectField selectField && selectField.ListId != value)
             {
                 selectField.ListId = value;
-                SelectedFieldChanged.InvokeAsync(SelectedField);
-                PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(SelectedField, nameof(SelectField.ListId), value));
+                FieldChanged.InvokeAsync(Field);
+                PropertyChanged.InvokeAsync(new FieldPropertyChangedArgs(Field, nameof(SelectField.ListId), value));
                 _ = FetchListValuesAsync(value);
             }
         }
@@ -179,10 +163,14 @@ public partial class PropertyEditor : ComponentBase
 
     #endregion
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        // Load the first 10 list IDs
-        await LoadListIdValuesAsync(new LoadDataArgs {Top = 10});
+        if (Field is SelectField && !_fetchedInitialListIds)
+        {
+            // Load the first 10 list IDs after the field is set and only once
+            await LoadListIdValuesAsync(new LoadDataArgs {Top = 10});
+            _fetchedInitialListIds = true;
+        }
     }
 
     private async Task LoadListIdValuesAsync(LoadDataArgs args)

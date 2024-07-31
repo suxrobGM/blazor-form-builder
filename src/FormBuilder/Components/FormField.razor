@@ -1,4 +1,4 @@
-﻿@using global::FormBuilder.Models
+﻿@using FormBuilder.Models
 
 <RadzenFormField Class="w-100" Text="@Field.Label" AllowFloatingLabel="true">
     <Start>@Prepend</Start>
@@ -10,6 +10,7 @@
                     Name="@textField.Name"
                     @bind-Value="textField.Value"
                     Placeholder="@textField.Placeholder"
+                    MaxLength="@textField.MaxLength"
                     ReadOnly="Disabled">
                 </RadzenTextBox>
                 break;
@@ -22,19 +23,29 @@
                     ReadOnly="Disabled">
                 </RadzenDropDown>
                 break;
-            case NumericIntField numericIntField:
+            case NumericField<int> numericIntField:
                 <RadzenNumeric
                     Name="@numericIntField.Name"
                     @bind-Value="numericIntField.Value"
                     Placeholder="@numericIntField.Placeholder"
+                    Min="numericIntField.Min"
+                    Max="numericIntField.Max"
+                    ShowUpDown="numericIntField.ShowUpDown"
+                    Step="@numericIntField.Step"
+                    Format="@numericIntField.Format"
                     ReadOnly="Disabled">
                 </RadzenNumeric>
                 break;
-            case NumericDoubleField numericDoubleField:
+            case NumericField<decimal> numericField:
                 <RadzenNumeric
-                    Name="@numericDoubleField.Name"
-                    @bind-Value="numericDoubleField.Value"
-                    Placeholder="@numericDoubleField.Placeholder"
+                    Name="@numericField.Name"
+                    @bind-Value="numericField.Value"
+                    Placeholder="@numericField.Placeholder"
+                    Min="numericField.Min"
+                    Max="numericField.Max"
+                    ShowUpDown="numericField.ShowUpDown"
+                    Step="@numericField.Step"
+                    Format="@numericField.Format"
                     ReadOnly="Disabled">
                 </RadzenNumeric>
                 break;
@@ -43,6 +54,7 @@
                     Name="@dateField.Name"
                     @bind-Value="dateField.Value"
                     Placeholder="@dateField.Placeholder"
+                    DateFormat="@dateField.DateFormat"
                     ReadOnly="Disabled">
                 </RadzenDatePicker>
                 break;
@@ -50,12 +62,54 @@
     </ChildContent>
     <End>@Append</End>
     <Helper>
-        @if (Field.Required)
+        @if (!string.IsNullOrEmpty(Field.Hint))
         {
-            <RadzenText TextStyle="TextStyle.Caption">
-                <span class="text-danger">*</span> required
-            </RadzenText>
-            <RadzenRequiredValidator Component="@Field.Name" />
+            <RadzenText TextStyle="TextStyle.Caption">@Field.Hint</RadzenText>
+        }
+        
+        @foreach(var validator in Field.Validators)
+        {
+            switch (validator)
+            {
+                case RequiredValidator requiredValidator:
+                    @if (requiredValidator.ShowRequiredHint)
+                    {
+                        <RadzenText TextStyle="TextStyle.Caption">
+                            <span class="text-danger">*</span> required
+                        </RadzenText>
+                    }
+                    <RadzenRequiredValidator 
+                        Component="@Field.Name" 
+                        Popup="requiredValidator.ShowAsPopup"
+                        Text="@requiredValidator.Text">
+                    </RadzenRequiredValidator>
+                    break;
+                case EmailValidator emailValidator:
+                    <RadzenEmailValidator 
+                        Component="@Field.Name" 
+                        Popup="emailValidator.ShowAsPopup"
+                        Text="@emailValidator.Text">
+                    </RadzenEmailValidator>
+                    break;
+                case LengthValidator lengthValidator:
+                    <RadzenLengthValidator 
+                        Component="@Field.Name" 
+                        Min="lengthValidator.MaxLength" 
+                        Max="lengthValidator.MinLength" 
+                        Popup="lengthValidator.ShowAsPopup"
+                        Text="@lengthValidator.Text">
+                    </RadzenLengthValidator>
+                    break;
+                case RangeValidator rangeValidator:
+                    <RadzenNumericRangeValidator 
+                        Component="@Field.Name" 
+                        Min="rangeValidator.Min" 
+                        Max="rangeValidator.Max" 
+                        Popup="rangeValidator.ShowAsPopup"
+                        Text="@rangeValidator.Text">
+                    </RadzenNumericRangeValidator>
+                    break;
+            }
         }
     </Helper>
 </RadzenFormField>

@@ -2,8 +2,6 @@
 
 public class TextField : Field<string>
 {
-    public TextField()
-    {
-        Type = FieldType.Text;
-    }
+    public override FieldType Type => FieldType.Text;
+    public long? MaxLength { get; set; }
 }

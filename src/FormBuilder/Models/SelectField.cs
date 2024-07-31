@@ -6,10 +6,7 @@
 /// </summary>
 public class SelectField : Field<string>
 {
-    public SelectField()
-    {
-        Type = FieldType.Select;
-    }
+    public override FieldType Type => FieldType.Select;
     
     /// <summary>
     /// The list ID that corresponds to the list of options for this field.
