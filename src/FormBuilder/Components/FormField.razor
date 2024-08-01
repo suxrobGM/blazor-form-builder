@@ -10,7 +10,7 @@
                     Name="@textField.Name"
                     @bind-Value="textField.Value"
                     Placeholder="@textField.Placeholder"
-                    MaxLength="@textField.MaxLength"
+                    MaxLength="@textField.GetMaxLength()"
                     ReadOnly="Disabled">
                 </RadzenTextBox>
                 break;
@@ -28,8 +28,8 @@
                     Name="@numericIntField.Name"
                     @bind-Value="numericIntField.Value"
                     Placeholder="@numericIntField.Placeholder"
-                    Min="numericIntField.Min"
-                    Max="numericIntField.Max"
+                    Min="numericIntField.GetMin()"
+                    Max="numericIntField.GetMax()"
                     ShowUpDown="numericIntField.ShowUpDown"
                     Step="@numericIntField.Step"
                     Format="@numericIntField.Format"
@@ -41,8 +41,8 @@
                     Name="@numericField.Name"
                     @bind-Value="numericField.Value"
                     Placeholder="@numericField.Placeholder"
-                    Min="numericField.Min"
-                    Max="numericField.Max"
+                    Min="numericField.GetMin()"
+                    Max="numericField.GetMax()"
                     ShowUpDown="numericField.ShowUpDown"
                     Step="@numericField.Step"
                     Format="@numericField.Format"
@@ -100,7 +100,7 @@
                         Text="@lengthValidator.Text">
                     </RadzenLengthValidator>
                     break;
-                case RangeValidator rangeValidator:
+                case NumericRangeValidator rangeValidator:
                     <RadzenNumericRangeValidator 
                         Component="@Field.Name" 
                         Min="rangeValidator.Min" 

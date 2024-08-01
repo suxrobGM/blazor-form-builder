@@ -11,7 +11,6 @@ public class NumericField<T> : Field<T> where T : struct
         else if (typeof(T) == typeof(uint) || typeof(T) == typeof(ulong) || typeof(T) == typeof(ushort))
         {
             Type = FieldType.NumericInt;
-            Min = 0;
         }
         else if (typeof(T) == typeof(decimal) || typeof(T) == typeof(double) || typeof(T) == typeof(float))
         {
@@ -24,9 +23,17 @@ public class NumericField<T> : Field<T> where T : struct
     }
     
     public override FieldType Type { get; }
-    public decimal? Min { get; set; }
-    public decimal? Max { get; set; }
     public string Step { get; set; } = "1";
     public bool ShowUpDown { get; set; } = true;
     public string? Format { get; set; }
+    
+    public decimal? GetMin()
+    {
+        return Validators.OfType<NumericRangeValidator>().FirstOrDefault()?.Min;
+    }
+    
+    public decimal? GetMax()
+    {
+        return Validators.OfType<NumericRangeValidator>().FirstOrDefault()?.Max;
+    }
 }

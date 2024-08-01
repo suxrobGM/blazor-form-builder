@@ -33,20 +33,13 @@
             <RadzenSwitch Name="DisabledInput" @bind-Value="@Disabled"/>
         </RadzenStack>
 
-        @if (Field is TextField textField)
-        {
-            <RadzenFormField Text="Max Length">
-                <RadzenNumeric @bind-Value="textField.MaxLength"></RadzenNumeric>
-            </RadzenFormField>
-        }
-
         @if (Field is NumericField<int> numericIntField)
         {
-            <NumericFieldPropertyEditor Field="numericIntField"/>
+            <NumericFieldEditor Field="numericIntField"/>
         }
         @if (Field is NumericField<decimal> numericDecimalField)
         {
-            <NumericFieldPropertyEditor Field="numericDecimalField"/>
+            <NumericFieldEditor Field="numericDecimalField"/>
         }
         
         @if (Field is DateField dateField)
@@ -83,7 +76,7 @@
                 </RadzenFormField>
             }
         }
-        
-        <RadzenText Text="Validators" TextStyle="TextStyle.H6" TextAlign="TextAlign.Center" />
+
+        <FieldValidatorsEditor @bind-Field="Field"/>
     </RadzenStack>
 }

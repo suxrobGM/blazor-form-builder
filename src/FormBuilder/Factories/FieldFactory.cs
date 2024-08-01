@@ -9,13 +9,13 @@ public static class FieldFactory
 {
     /// <summary>
     /// Creates a new field model based on the provided fieldType.
-    /// List of available field types: TextField, NumericIntField, NumericDoubleField, SelectField, DateField.
+    /// List of available field types: TextField, NumericIntField, NumericDecimalField, SelectField, DateField.
     /// </summary>
     /// <param name="fieldType">The type of the field to create.</param>
     /// <returns>
     /// A generic instance of the field based on the provided fieldType.
     /// </returns>
-    public static Field CreateField(FieldType fieldType)
+    public static Field Create(FieldType fieldType)
     {
         return fieldType switch
         {
@@ -36,9 +36,9 @@ public static class FieldFactory
     /// <returns>
     /// A generic instance of the field based on the provided fieldType.
     /// </returns>
-    public static Field CreateFieldFrom(FieldType newFieldType, Field oldField)
+    public static Field CreateFrom(FieldType newFieldType, Field oldField)
     {
-        var newField = CreateField(newFieldType);
+        var newField = Create(newFieldType);
         newField.Label = oldField.Label;
         newField.Placeholder = oldField.Placeholder;
         newField.ReadOnly = oldField.ReadOnly;

@@ -3,5 +3,9 @@
 public class TextField : Field<string>
 {
     public override FieldType Type => FieldType.Text;
-    public long? MaxLength { get; set; }
+    
+    public long? GetMaxLength()
+    {
+        return Validators.OfType<LengthValidator>().FirstOrDefault()?.MaxLength;
+    }
 }

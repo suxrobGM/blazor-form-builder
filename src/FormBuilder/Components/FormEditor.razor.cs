@@ -74,7 +74,7 @@ public partial class FormEditor : ComponentBase
 
     private Task AddField(FieldType fieldType)
     {
-        var field = FieldFactory.CreateField(fieldType);
+        var field = FieldFactory.Create(fieldType);
         field.Label = fieldType.ToString();
         _formDefinition.Fields.Add(field);
         SelectedField = field;
@@ -106,7 +106,7 @@ public partial class FormEditor : ComponentBase
     /// <param name="newType"></param>
     private void ChangeFieldType(FieldType newType, Field oldField)
     {
-        var newField = FieldFactory.CreateFieldFrom(newType, oldField);
+        var newField = FieldFactory.CreateFrom(newType, oldField);
         var index = _formDefinition.Fields.IndexOf(oldField);
         _formDefinition.Fields[index] = newField; // Replace the old field with the new one, old one will be deleted by GC
         SelectedField = newField;

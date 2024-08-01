@@ -1,0 +1,42 @@
+﻿@using FormBuilder.Models
+@typeparam TValue where TValue : FormBuilder.Models.Validator
+
+<RadzenStack Orientation="Orientation.Vertical">
+    <RadzenFormField Text="Error Text">
+        <RadzenTextBox Value="@Validator.Text" ValueChanged="OnTextChanged"/>
+    </RadzenFormField>
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
+        <RadzenLabel Text="Show as popup" Component="Validator.ShowAsPopup"/>
+        <RadzenSwitch Name="Validator.ShowAsPopup" Value="@Validator.ShowAsPopup" ValueChanged="OnShowAsPopupChanged"/>
+    </RadzenStack>
+
+    @switch (Validator)
+    {
+        case RequiredValidator requiredValidator:
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
+                <RadzenLabel Text="Required" Component="Validator.IsRequired"/>
+                <RadzenSwitch Name="Validator.IsRequired" Value="@requiredValidator.IsRequired" Disabled="true"/>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
+                <RadzenLabel Text="Show required hint" Component="ShowRequiredHint"/>
+                <RadzenSwitch Name="Validator.ShowRequiredHint" Value="@requiredValidator.ShowRequiredHint" ValueChanged="OnShowRequiredHintChanged"/>
+            </RadzenStack>
+            break;
+        case LengthValidator lengthValidator:
+            <RadzenFormField Text="Min Chars Length">
+                <RadzenNumeric TValue="int?" Value="lengthValidator.MinLength" ValueChanged="OnMinLengthChanged"/>
+            </RadzenFormField>
+            <RadzenFormField Text="Max Chars Length">
+                <RadzenNumeric TValue="int?" Value="lengthValidator.MaxLength" ValueChanged="OnMaxLengthChanged"/>
+            </RadzenFormField>
+            break;
+        case NumericRangeValidator numericRangeValidator:
+            <RadzenFormField Text="Min">
+                <RadzenNumeric TValue="int" Value="numericRangeValidator.Min" ValueChanged="OnMinChanged"/>
+            </RadzenFormField>
+            <RadzenFormField Text="Max">
+                <RadzenNumeric TValue="int" Value="numericRangeValidator.Max" ValueChanged="OnMaxChanged"/>
+            </RadzenFormField>
+            break;
+    }
+</RadzenStack>

@@ -28,7 +28,7 @@ internal class ValidatorJsonConverter : JsonConverter<Validator>
             ValidatorType.Required => JsonSerializer.Deserialize<RequiredValidator>(rootElement.GetRawText(), options),
             ValidatorType.Length => JsonSerializer.Deserialize<LengthValidator>(rootElement.GetRawText(), options),
             ValidatorType.Email => JsonSerializer.Deserialize<EmailValidator>(rootElement.GetRawText(), options),
-            ValidatorType.Range => JsonSerializer.Deserialize<RangeValidator>(rootElement.GetRawText(), options),
+            ValidatorType.NumericRange => JsonSerializer.Deserialize<NumericRangeValidator>(rootElement.GetRawText(), options),
             _ => throw new NotSupportedException($"The value of the validator type '{enumValidatorType}' is not supported"),
         };
 

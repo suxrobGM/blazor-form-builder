@@ -1,7 +1,7 @@
 ﻿@using FormBuilder.Models
 
 <RadzenRow class="vh-100">
-    <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
+    <RadzenColumn Size="12" SizeMD="8" SizeLG="9">
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
             @if (_formDefinition.Id is not null)
             {
@@ -47,10 +47,10 @@
         </RadzenStack>
     </RadzenColumn>
     
-    <RadzenColumn class="border rz-background-color-base-100" Size="12" SizeMD="3" SizeLG="2">
+    <RadzenColumn class="border rz-background-color-base-100" Size="12" SizeMD="4" SizeLG="3">
         <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
             <RadzenPanelMenu>
-                <RadzenPanelMenuItem Text="Fields" Icon="payment">
+                <RadzenPanelMenuItem Text="Add Field" Icon="payment">
                     <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
                         <RadzenPanelMenuItem Text="Text Field" Icon="input" Click="() => AddField(FieldType.Text)"/>
                     </Dragable>
@@ -79,12 +79,13 @@
                 </FieldPropertyEditor>
             }
             
-            @if (_formDefinition.Fields.Count > 0)
-            {
-                <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
-            }
-            
-            <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="IsLoading"/>
+            <RadzenStack class="ms-1 mt-2" Orientation="Orientation.Horizontal" Gap="1rem">
+                @if (_formDefinition.Fields.Count > 0)
+                {
+                    <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
+                }
+                <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="IsLoading"/>
+            </RadzenStack>
         </RadzenStack>
     </RadzenColumn>
 </RadzenRow>
