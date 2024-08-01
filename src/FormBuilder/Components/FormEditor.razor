@@ -1,6 +1,6 @@
 ﻿@using FormBuilder.Models
 
-<RadzenRow Class="vh-100">
+<RadzenRow class="vh-100">
     <RadzenColumn Size="12" SizeMD="9" SizeLG="10">
         <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
             @if (_formDefinition.Id is not null)
@@ -47,34 +47,43 @@
         </RadzenStack>
     </RadzenColumn>
     
-    <RadzenColumn Class="border bg-light px-1" Size="12" SizeMD="3" SizeLG="2">
-        <RadzenStack Class="pt-2" Orientation="Orientation.Vertical">
-            <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Fields</RadzenText>
-            <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Text Field" Click="() => AddField(FieldType.Text)"/>
-            </Dragable>
-            <Dragable Data="() => AddField(FieldType.NumericInt)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Integer Field" Click="() => AddField(FieldType.NumericInt)"/>
-            </Dragable>
-            <Dragable Data="() => AddField(FieldType.NumericDecimal)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Decimal Field" Click="() => AddField(FieldType.NumericDecimal)"/>
-            </Dragable>
-            <Dragable Data="() => AddField(FieldType.Date)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Date Field" Click="() => AddField(FieldType.Date)"/>
-            </Dragable>
-            <Dragable Data="() => AddField(FieldType.Select)" Zone="FieldsZone">
-                <RadzenButton Class="w-100" Text="Select Field" Click="() => AddField(FieldType.Select)"/>
-            </Dragable>
-            <hr/>
-        </RadzenStack>
-        <RadzenStack Orientation="Orientation.Vertical" Gap="1rem">
-            <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
-            <FieldPropertyEditor 
-                @bind-Field="SelectedField" 
-                PropertyChanged="(e) => HandleFieldPropertyChanged(e)">
-            </FieldPropertyEditor>
-            <hr/>
-            <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
+    <RadzenColumn class="border rz-background-color-base-100" Size="12" SizeMD="3" SizeLG="2">
+        <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+            <RadzenPanelMenu>
+                <RadzenPanelMenuItem Text="Fields" Icon="payment">
+                    <Dragable Data="() => AddField(FieldType.Text)" Zone="FieldsZone">
+                        <RadzenPanelMenuItem Text="Text Field" Icon="input" Click="() => AddField(FieldType.Text)"/>
+                    </Dragable>
+                    <Dragable Data="() => AddField(FieldType.NumericInt)" Zone="FieldsZone">
+                        <RadzenPanelMenuItem Text="Integer Field" Icon="pin" Click="() => AddField(FieldType.NumericInt)"/>
+                    </Dragable>
+                    <Dragable Data="() => AddField(FieldType.NumericDecimal)" Zone="FieldsZone">
+                        <RadzenPanelMenuItem Text="Decimal Field" Icon="pin" Click="() => AddField(FieldType.NumericDecimal)"/>
+                    </Dragable>
+                    <Dragable Data="() => AddField(FieldType.Date)" Zone="FieldsZone">
+                        <RadzenPanelMenuItem Text="Date Field" Icon="calendar_month" Click="() => AddField(FieldType.Date)"/>
+                    </Dragable>
+                    <Dragable Data="() => AddField(FieldType.Select)" Zone="FieldsZone">
+                        <RadzenPanelMenuItem Text="Select Field" Icon="list_alt" Click="() => AddField(FieldType.Select)"/>
+                    </Dragable>
+                </RadzenPanelMenuItem>
+            </RadzenPanelMenu>
+            
+            @if (SelectedField is not null)
+            {
+                <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
+                <FieldPropertyEditor
+                    ContainerClass="px-1"
+                    @bind-Field="SelectedField"
+                    PropertyChanged="(e) => HandleFieldPropertyChanged(e)">
+                </FieldPropertyEditor>
+            }
+            
+            @if (_formDefinition.Fields.Count > 0)
+            {
+                <RadzenButton Text="Save Form" Click="SaveFormAsync" Disabled="IsLoading"/>
+            }
+            
             <RadzenButton Text="Load Form" Click="OpenLoadFormDialogAsync" Disabled="IsLoading"/>
         </RadzenStack>
     </RadzenColumn>

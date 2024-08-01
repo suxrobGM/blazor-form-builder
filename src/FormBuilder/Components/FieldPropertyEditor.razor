@@ -2,7 +2,7 @@
 
 @if (Field is not null)
 {
-    <RadzenStack Orientation="Orientation.Vertical">
+    <RadzenStack class="@ContainerClass" Orientation="Orientation.Vertical">
         <RadzenFormField Text="ID">
             <RadzenTextBox @bind-Value="Field.Name" Disabled="true"/>
         </RadzenFormField>
@@ -24,14 +24,14 @@
         <RadzenFormField Text="Hint" AllowFloatingLabel="false">
             <RadzenTextBox @bind-Value="Field.Hint"/>
         </RadzenFormField>
-        <div>
-            <RadzenCheckBox Name="ReadOnlyInput" @bind-Value="@ReadOnly"/>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
             <RadzenLabel Text="Read only" Component="ReadOnlyInput"/>
-        </div>
-        <div>
-            <RadzenCheckBox Name="DisabledInput" @bind-Value="@Disabled"/>
+            <RadzenSwitch Name="ReadOnlyInput" @bind-Value="@ReadOnly"/>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
             <RadzenLabel Text="Disabled" Component="DisabledInput"/>
-        </div>
+            <RadzenSwitch Name="DisabledInput" @bind-Value="@Disabled"/>
+        </RadzenStack>
 
         @if (Field is TextField textField)
         {
@@ -84,6 +84,6 @@
             }
         }
         
-        <RadzenText Text="Validators" TextStyle="TextStyle.H6" />
+        <RadzenText Text="Validators" TextStyle="TextStyle.H6" TextAlign="TextAlign.Center" />
     </RadzenStack>
 }

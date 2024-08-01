@@ -45,9 +45,14 @@ public partial class FieldPropertyEditor : ComponentBase
     /// </summary>
     [Parameter]
     public EventCallback<FieldPropertyChangedArgs> PropertyChanged { get; set; }
+    
+    /// <summary>
+    /// The CSS class for the container element.
+    /// </summary>
+    [Parameter]
+    public string? ContainerClass { get; set; }
 
     #endregion
-    
     
     #region Binding Properties
     

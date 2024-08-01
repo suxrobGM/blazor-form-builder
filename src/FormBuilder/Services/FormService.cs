@@ -9,7 +9,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace FormBuilder.Services;
 
-internal class FormService
+public class FormService
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonSerializerDefaultOptions;
