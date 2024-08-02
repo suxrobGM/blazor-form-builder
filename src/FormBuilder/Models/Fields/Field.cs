@@ -104,6 +104,8 @@ public abstract class Field : ObservableBase
             {
                 validator.PropertyChanged += RaiseValidatorsChanged;
             }
+            
+            OnPropertyChanged(nameof(Validators)); // Notify that the collection has changed
         }
         else if (args is { Action: NotifyCollectionChangedAction.Remove, OldItems: not null })
         {
@@ -111,6 +113,8 @@ public abstract class Field : ObservableBase
             {
                 validator.PropertyChanged -= RaiseValidatorsChanged;
             }
+            
+            OnPropertyChanged(nameof(Validators));
         }
     }
     

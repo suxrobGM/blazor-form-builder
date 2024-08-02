@@ -15,7 +15,22 @@ public partial class FieldValidatorsEditor : ComponentBase
     
     private void AddValidator(ValidatorType validatorType)
     {
+        if (HasValidator(validatorType))
+        {
+            return;
+        }
+        
         var validator = ValidatorFactory.Create(validatorType);
         Field.Validators.Add(validator);
+    }
+    
+    private void RemoveValidator(Validator validator)
+    {
+        Field.Validators.Remove(validator);
+    }
+    
+    private bool HasValidator(ValidatorType validatorType)
+    {
+        return Field.Validators.Any(v => v.Type == validatorType);
     }
 }

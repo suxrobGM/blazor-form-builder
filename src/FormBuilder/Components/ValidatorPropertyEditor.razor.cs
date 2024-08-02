@@ -9,6 +9,9 @@ public partial class ValidatorPropertyEditor<TValue> : ComponentBase where TValu
 
     [Parameter, EditorRequired]
     public TValue Validator { get; set; } = default!;
+    
+    [Parameter]
+    public RenderFragment? Header { get; set; }
 
     #endregion
 }

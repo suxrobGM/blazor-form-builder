@@ -15,13 +15,25 @@
                 </RadzenTextBox>
                 break;
             case SelectField selectField:
-                <RadzenDropDown
-                    Name="@Field.Name"
-                    @bind-Value="selectField.Value"
-                    Data="@selectField.Options"
-                    Placeholder="@selectField.Placeholder"
-                    ReadOnly="Disabled">
-                </RadzenDropDown>
+                if (Disabled)
+                {
+                    <RadzenTextBox
+                        Name="@Field.Name"
+                        @bind-Value="selectField.Value"
+                        Placeholder="@selectField.Placeholder"
+                        ReadOnly="Disabled">
+                    </RadzenTextBox>
+                }
+                else
+                {
+                    <RadzenDropDown
+                        Name="@Field.Name"
+                        @bind-Value="selectField.Value"
+                        Data="@selectField.Options"
+                        Placeholder="@selectField.Placeholder">
+                    </RadzenDropDown>
+                }
+                
                 break;
             case NumericField<int> numericIntField:
                 <RadzenNumeric

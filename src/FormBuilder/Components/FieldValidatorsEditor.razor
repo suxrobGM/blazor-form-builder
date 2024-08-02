@@ -37,22 +37,58 @@
             {
                 case RequiredValidator requiredValidator:
                     <RadzenAccordionItem Text="Required Validator" Icon="check">
-                        <ValidatorPropertyEditor Validator="@requiredValidator"/>
+                        <ValidatorPropertyEditor Validator="@requiredValidator">
+                            <Header>
+                                <RadzenButton
+                                    Text="Remove"
+                                    ButtonStyle="ButtonStyle.Danger"
+                                    Size="ButtonSize.Small"
+                                    Click="() => RemoveValidator(validator)">
+                                </RadzenButton>
+                            </Header>
+                        </ValidatorPropertyEditor>
                     </RadzenAccordionItem>
                     break;
                 case EmailValidator emailValidator:
                     <RadzenAccordionItem Text="Email Validator" Icon="mail">
-                        <ValidatorPropertyEditor Validator="@emailValidator"/>
+                        <ValidatorPropertyEditor Validator="@emailValidator">
+                            <Header>
+                                <RadzenButton
+                                    Text="Remove"
+                                    ButtonStyle="ButtonStyle.Danger"
+                                    Size="ButtonSize.Small"
+                                    Click="() => RemoveValidator(validator)">
+                                </RadzenButton>
+                            </Header>
+                        </ValidatorPropertyEditor>
                     </RadzenAccordionItem>
                     break;
                 case LengthValidator lengthValidator:
                     <RadzenAccordionItem Text="Length Validator" Icon="abc">
-                        <ValidatorPropertyEditor Validator="@lengthValidator"/>
+                        <ValidatorPropertyEditor Validator="@lengthValidator">
+                            <Header>
+                                <RadzenButton
+                                    Text="Remove"
+                                    ButtonStyle="ButtonStyle.Danger"
+                                    Size="ButtonSize.Small"
+                                    Click="() => RemoveValidator(validator)">
+                                </RadzenButton>
+                            </Header>
+                        </ValidatorPropertyEditor>
                     </RadzenAccordionItem>
                     break;
                 case NumericRangeValidator numericRangeValidator:
                     <RadzenAccordionItem Text="Numeric Range Validator" Icon="filter_1">
-                        <ValidatorPropertyEditor Validator="@numericRangeValidator"/>
+                        <ValidatorPropertyEditor Validator="@numericRangeValidator">
+                            <Header>
+                                <RadzenButton
+                                    Text="Remove"
+                                    ButtonStyle="ButtonStyle.Danger"
+                                    Size="ButtonSize.Small"
+                                    Click="() => RemoveValidator(validator)">
+                                </RadzenButton>
+                            </Header>
+                        </ValidatorPropertyEditor>
                     </RadzenAccordionItem>
                     break;
             }

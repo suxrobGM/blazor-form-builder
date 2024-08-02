@@ -2,6 +2,7 @@
 @typeparam TValue where TValue : FormBuilder.Models.Validator
 
 <RadzenStack Orientation="Orientation.Vertical">
+    @Header
     <RadzenFormField Text="Error Text">
         <RadzenTextBox @bind-Value="@Validator.Text"/>
     </RadzenFormField>
