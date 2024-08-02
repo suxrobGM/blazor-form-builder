@@ -11,10 +11,20 @@ public class SelectField : Field<string>
     /// <summary>
     /// The list ID that corresponds to the list of options for this field.
     /// </summary>
-    public int? ListId { get; set; }
+    private int? _listId;
+    public int? ListId
+    {
+        get => _listId;
+        set => SetField(ref _listId, value);
+    }
     
     /// <summary>
     /// Associated list values for the particular list ID.
     /// </summary>
-    public IEnumerable<string> Options { get; set; } = [];
+    private IEnumerable<string> _options = [];
+    public IEnumerable<string> Options
+    {
+        get => _options;
+        set => SetField(ref _options, value);
+    }
 }

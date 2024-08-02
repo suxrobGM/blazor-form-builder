@@ -1,31 +1,50 @@
-﻿using FormBuilder.Models;
+﻿using System.Globalization;
+using FormBuilder.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace FormBuilder.Components;
 
 public partial class NumericFieldEditor<TValue> : ComponentBase where TValue : struct
 {
+    #region Parameters
+
     [Parameter, EditorRequired]
     public NumericField<TValue> Field { get; set; } = default!;
-
+    
+    /// <summary>
+    /// Event that is triggered when a field property changes such as step, format, etc.
+    /// </summary>
     [Parameter]
-    public EventCallback<NumericField<TValue>> FieldChanged { get; set; }
+    public EventCallback<FieldTypeChangedEventArgs> PropertyChanged { get; set; }
 
-    private void OnStepChanged(string value)
+    #endregion
+    
+
+    #region Binding Properties
+
+    private decimal _step;
+    private decimal Step
     {
-        Field.Step = value;
-        FieldChanged.InvokeAsync(Field);
+        get => _step;
+        set
+        {
+            if (_step == value)
+            {
+                return;
+            }
+
+            _step = value;
+            Field.Step = value.ToString(CultureInfo.InvariantCulture);
+        }
     }
 
-    private void OnShowUpDownChanged(bool value)
-    {
-        Field.ShowUpDown = value;
-        FieldChanged.InvokeAsync(Field);
-    }
+    #endregion
 
-    private void OnFormatChanged(string? value)
+    protected override void OnInitialized()
     {
-        Field.Format = value;
-        FieldChanged.InvokeAsync(Field);
+        if (decimal.TryParse(Field.Step, out var step))
+        {
+            _step = step;
+        }
     }
 }

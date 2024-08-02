@@ -23,9 +23,36 @@ public class NumericField<T> : Field<T> where T : struct
     }
     
     public override FieldType Type { get; }
-    public string Step { get; set; } = "1";
-    public bool ShowUpDown { get; set; } = true;
-    public string? Format { get; set; }
+    
+    /// <summary>
+    /// The step value for the numeric field.
+    /// </summary>
+    private string _step = "1";
+    public string Step
+    { 
+        get => _step;
+        set => SetField(ref _step, value);
+    }
+
+    /// <summary>
+    /// Whether to show the up and down buttons.
+    /// </summary>
+    private bool _showUpDown = true;
+    public bool ShowUpDown
+    {
+        get => _showUpDown;
+        set => SetField(ref _showUpDown, value);
+    }
+    
+    /// <summary>
+    /// The format to display the numeric value.
+    /// </summary>
+    private string? _format;
+    public string? Format
+    {
+        get => _format;
+        set => SetField(ref _format, value);
+    }
     
     public decimal? GetMin()
     {

@@ -2,15 +2,28 @@
 
 <RadzenPanelMenu>
     <RadzenPanelMenuItem Text="Add Validator" Icon="rule">
-        <RadzenPanelMenuItem Text="Required Validator" Icon="check" Click="() => AddValidator(ValidatorType.Required)"/>
+        <RadzenPanelMenuItem 
+            Text="Required Validator"
+            Icon="check" 
+            Click="() => AddValidator(ValidatorType.Required)"/>
+        
         @switch (Field.Type)
         {
             case FieldType.Text:
-                <RadzenPanelMenuItem Text="Email Validator" Icon="mail" Click="() => AddValidator(ValidatorType.Email)"/>
-                <RadzenPanelMenuItem Text="Length Validator" Icon="abc" Click="() => AddValidator(ValidatorType.Length)"/>
+                <RadzenPanelMenuItem 
+                    Text="Email Validator" 
+                    Icon="mail" 
+                    Click="() => AddValidator(ValidatorType.Email)"/>
+                <RadzenPanelMenuItem 
+                    Text="Length Validator" 
+                    Icon="abc" 
+                    Click="() => AddValidator(ValidatorType.Length)"/>
                 break;
             case FieldType.NumericInt or FieldType.NumericDecimal:
-                <RadzenPanelMenuItem Text="Numeric Range Validator" Icon="filter_1" Click="() => AddValidator(ValidatorType.NumericRange)"/>
+                <RadzenPanelMenuItem 
+                    Text="Numeric Range Validator"
+                    Icon="filter_1" 
+                    Click="() => AddValidator(ValidatorType.NumericRange)"/>
                 break;
         }
     </RadzenPanelMenuItem>
@@ -24,34 +37,22 @@
             {
                 case RequiredValidator requiredValidator:
                     <RadzenAccordionItem Text="Required Validator" Icon="check">
-                        <ValidatorPropertyEditor
-                            TValue="RequiredValidator"
-                            Validator="@requiredValidator"
-                            ValidatorChanged="RaiseFieldChanged"/>
+                        <ValidatorPropertyEditor Validator="@requiredValidator"/>
                     </RadzenAccordionItem>
                     break;
                 case EmailValidator emailValidator:
                     <RadzenAccordionItem Text="Email Validator" Icon="mail">
-                        <ValidatorPropertyEditor
-                            TValue="EmailValidator"
-                            Validator="@emailValidator"
-                            ValidatorChanged="RaiseFieldChanged"/>
+                        <ValidatorPropertyEditor Validator="@emailValidator"/>
                     </RadzenAccordionItem>
                     break;
                 case LengthValidator lengthValidator:
                     <RadzenAccordionItem Text="Length Validator" Icon="abc">
-                        <ValidatorPropertyEditor
-                            TValue="LengthValidator"
-                            Validator="@lengthValidator"
-                            ValidatorChanged="RaiseFieldChanged"/>
+                        <ValidatorPropertyEditor Validator="@lengthValidator"/>
                     </RadzenAccordionItem>
                     break;
                 case NumericRangeValidator numericRangeValidator:
                     <RadzenAccordionItem Text="Numeric Range Validator" Icon="filter_1">
-                        <ValidatorPropertyEditor
-                            TValue="NumericRangeValidator"
-                            Validator="@numericRangeValidator"
-                            ValidatorChanged="RaiseFieldChanged"/>
+                        <ValidatorPropertyEditor Validator="@numericRangeValidator"/>
                     </RadzenAccordionItem>
                     break;
             }

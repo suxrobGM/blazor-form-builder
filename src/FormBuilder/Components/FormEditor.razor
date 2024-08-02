@@ -74,8 +74,8 @@
                 <RadzenText TextStyle="TextStyle.H5" TextAlign="TextAlign.Center">Properties</RadzenText>
                 <FieldPropertyEditor
                     ContainerClass="px-1"
-                    @bind-Field="SelectedField"
-                    PropertyChanged="(e) => HandleFieldPropertyChanged(e)">
+                    Field="SelectedField"
+                    FieldTypeChanged="HandleFieldTypeChanged">
                 </FieldPropertyEditor>
             }
             

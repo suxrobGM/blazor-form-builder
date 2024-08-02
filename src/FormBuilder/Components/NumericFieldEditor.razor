@@ -1,13 +1,13 @@
 ﻿@typeparam TValue where TValue : struct
 
 <RadzenFormField Text="Step">
-    <RadzenNumeric TValue="decimal" />
+    <RadzenNumeric @bind-Value="Step"/>
 </RadzenFormField>
 <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" AlignItems="AlignItems.Center">
-    <RadzenLabel Component="ShowUpDownInput" Text="Show Up Down" />
-    <RadzenSwitch TValue="bool" Name="ShowUpDownInput" Value="Field.ShowUpDown" ValueChanged="OnShowUpDownChanged"/>
+    <RadzenLabel Component="ShowUpDownInput" Text="Show Up Down"/>
+    <RadzenSwitch Name="ShowUpDownInput" @bind-Value="Field.ShowUpDown"/>
 </RadzenStack>
 
 <RadzenFormField Text="Format">
-    <RadzenTextBox Value="@Field.Format" ValueChanged="OnFormatChanged"/>
+    <RadzenTextBox @bind-Value="@Field.Format"/>
 </RadzenFormField>

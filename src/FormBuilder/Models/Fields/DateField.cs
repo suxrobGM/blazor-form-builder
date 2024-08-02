@@ -7,5 +7,14 @@
 public class DateField : Field<DateTime?>
 {
     public override FieldType Type => FieldType.Date;
-    public string? DateFormat { get; set; }
+    
+    /// <summary>
+    /// The date format to display.
+    /// </summary>
+    private string? _dateFormat;
+    public string? DateFormat
+    {
+        get => _dateFormat;
+        set => SetField(ref _dateFormat, value);
+    }
 }

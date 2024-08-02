@@ -3,5 +3,11 @@
 public class EmailValidator : Validator
 {
     public override ValidatorType Type => ValidatorType.Email;
-    public override string Text { get; set; } = "Invalid email address";
+    
+    private string _text = "Invalid email address";
+    public override string Text
+    {
+        get => _text;
+        set => SetField(ref _text, value);
+    }
 }

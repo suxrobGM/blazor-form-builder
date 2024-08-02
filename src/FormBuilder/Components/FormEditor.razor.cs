@@ -1,4 +1,5 @@
-﻿using FormBuilder.Factories;
+﻿using System.ComponentModel;
+using FormBuilder.Factories;
 using FormBuilder.Models;
 using FormBuilder.Services;
 using FormBuilder.Shared.Models;
@@ -28,6 +29,7 @@ public partial class FormEditor : ComponentBase
 
     #endregion
 
+    
     #region Binding Properties
 
     private Field? _selectedField;
@@ -36,8 +38,24 @@ public partial class FormEditor : ComponentBase
         get => _selectedField;
         set
         {
+            if (_selectedField == value)
+            {
+                return;
+            }
+            
+            // Unsubscribe from the previous field's property changed event
+            if (_selectedField is not null)
+            {
+                _selectedField.PropertyChanged -= HandleFieldPropertyChanged;
+            }
+            
             _selectedField = value;
-            StateHasChanged();
+            
+            // Subscribe to the new field's property changed event
+            if (_selectedField is not null)
+            {
+                _selectedField.PropertyChanged += HandleFieldPropertyChanged;
+            }
         }
     }
     
@@ -85,16 +103,6 @@ public partial class FormEditor : ComponentBase
     {
         _formDefinition.Fields.Remove(field);
         SelectedField = null;
-        return UpdateFormDesignJsonAsync();
-    }
-    
-    private Task HandleFieldPropertyChanged(FieldPropertyChangedArgs args)
-    {
-        if (args is { PropertyName: nameof(Field.Type), NewValue: FieldType fieldType })
-        {
-            ChangeFieldType(fieldType, args.Field);
-        }
-        
         return UpdateFormDesignJsonAsync();
     }
 
@@ -183,4 +191,20 @@ public partial class FormEditor : ComponentBase
 
         return createFormResult;
     }
+
+    #region Event Handlers
+
+    private Task HandleFieldTypeChanged(FieldTypeChangedEventArgs args)
+    {
+        ChangeFieldType(args.NewType, args.Field);
+        return UpdateFormDesignJsonAsync();
+    }
+    
+    private async void HandleFieldPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        await UpdateFormDesignJsonAsync();
+        StateHasChanged();
+    }
+
+    #endregion
 }
