@@ -6,7 +6,7 @@
 public static class Themes
 {
     public const string Default = "default";
-    public const string DefaultDark = "default";
+    public const string DefaultDark = "dark";
     public const string Material = "material";
     public const string MaterialDark = "material-dark";
     public const string Standard = "standard";
