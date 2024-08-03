@@ -1,10 +1,7 @@
-﻿using FormBuilder.Shared.Models;
-
-namespace FormBuilder;
+﻿namespace FormBuilder;
 
 public record FormBuilderOptions
 {
     public string? FormApiHost { get; init; }
-    
-    public Func<string, HttpClient, Task<FormDto>>? GetFormById { get; init; }
+    public TimeSpan CacheExpiration { get; init; } = TimeSpan.FromMinutes(30);
 }

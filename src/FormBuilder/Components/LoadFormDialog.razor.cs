@@ -60,7 +60,7 @@ public partial class LoadFormDialog : ComponentBase
             return true; // No form design to validate
         }
         
-        var formDefinition = FormService.DeserializeForm(_formModel.FormDesign);
+        var formDefinition = FormService.FormSerializer.Deserialize(_formModel.FormDesign);
         return formDefinition is not null;
     }
     
@@ -83,7 +83,7 @@ public partial class LoadFormDialog : ComponentBase
     {
         IsLoading = true;
         _formModel.Id = id;
-        var result = await FormService.GetFormByIdAsync(_formModel.Id);
+        var result = await FormService.FormApi.GetFormByIdAsync(_formModel.Id);
         
         if (result is { Success: true, Data.FormDesign: not null })
         {
@@ -99,7 +99,7 @@ public partial class LoadFormDialog : ComponentBase
     
     private async Task HandleFormDeserialization(string formDesign, string? id)
     {
-        var formDefinition = await FormService.DeserializeFormAsync(formDesign);
+        var formDefinition = await FormService.FormSerializer.DeserializeAsync(formDesign);
         if (formDefinition != null)
         {
             await FormLoaded.InvokeAsync(new FormLoadedEventArgs(id, formDefinition));

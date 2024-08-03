@@ -18,6 +18,9 @@ public static class Registrar
         services.AddSingleton(options);
         services.AddSingleton<DragDropService>();
         services.AddScoped<FormService>();
+        services.AddScoped<IFormSerializer, FormSerializerImpl>();
+        services.AddScoped<IFormApi, FormApiImpl>();
+        services.AddScoped<ILovApi, LovApiImpl>();
         services.AddRadzenComponents();
         services.AddMemoryCache();
         return services;

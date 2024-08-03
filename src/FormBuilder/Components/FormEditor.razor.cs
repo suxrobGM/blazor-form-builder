@@ -87,7 +87,7 @@ public partial class FormEditor : ComponentBase
     /// </summary>
     private async Task UpdateFormDesignJsonAsync()
     {
-        _formDesignJson = await FormService.SerializeFormAsync(_formDefinition, true);
+        _formDesignJson = await FormService.FormSerializer.SerializeAsync(_formDefinition, true);
     }
 
     private Task AddField(FieldType fieldType)
@@ -146,7 +146,7 @@ public partial class FormEditor : ComponentBase
         }
         else
         {
-            result = await FormService.UpdateFormAsync(_formDefinition.Id, _formDefinition);
+            result = await FormService.FormApi.UpdateFormAsync(_formDefinition.Id, _formDefinition);
         }
         
         if (result.Success)
@@ -181,7 +181,7 @@ public partial class FormEditor : ComponentBase
     /// <returns>Operation result</returns>
     private async Task<Result> CreateNewFormAsync()
     {
-        var createFormResult = await FormService.CreateFormAsync(_formDefinition);
+        var createFormResult = await FormService.FormApi.CreateFormAsync(_formDefinition);
 
         if (createFormResult is { Success: true, Data: not null })
         {

@@ -96,7 +96,7 @@ public partial class FormRenderer : ComponentBase
     public async Task LoadFormFromIdAsync(string formId)
     {
         IsLoading = true;
-        var result = await FormService.GetFormByIdAsync(formId);
+        var result = await FormService.FormApi.GetFormByIdAsync(formId);
         
         if (result is { Success: true, Data.FormDesign: not null })
         {
@@ -117,7 +117,7 @@ public partial class FormRenderer : ComponentBase
     public async Task LoadFormFromJsonAsync(string formJson)
     {
         IsLoading = true;
-        var formDefinition = await FormService.DeserializeFormAsync(formJson);
+        var formDefinition = await FormService.FormSerializer.DeserializeAsync(formJson);
         
         if (formDefinition is null)
         {
@@ -138,7 +138,7 @@ public partial class FormRenderer : ComponentBase
     /// </summary>
     public Task<string> GetFormAsJsonAsync()
     {
-        return FormService.SerializeFormAsync(_formDefinition);
+        return FormService.FormSerializer.SerializeAsync(_formDefinition);
     }
     
     private string GetFormTitle()
@@ -158,7 +158,7 @@ public partial class FormRenderer : ComponentBase
                 continue;
             }
             
-            var result = await FormService.GetLovAsync(selectField.ListId.Value);
+            var result = await FormService.LovApi.GetLovAsync(selectField.ListId.Value);
                 
             if (!result.Success || result.Data is null)
             {

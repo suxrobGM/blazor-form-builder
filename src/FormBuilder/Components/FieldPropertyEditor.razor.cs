@@ -110,7 +110,7 @@ public partial class FieldPropertyEditor : ComponentBase
 
     private async Task LoadListIdValuesAsync(LoadDataArgs args)
     {
-        var pagedData = await FormService.GetListIdPagedAsync(args.ToPagedQuery());
+        var pagedData = await FormService.LovApi.GetListIdPagedAsync(args.ToPagedQuery());
         _listIds = pagedData.Data ?? [];
         _listIdCount = pagedData.PageSize * pagedData.PagesCount;
     }
@@ -123,7 +123,7 @@ public partial class FieldPropertyEditor : ComponentBase
         }   
         
         ListValuesLoading = true;
-        var result = await FormService.GetLovAsync(listId.Value);
+        var result = await FormService.LovApi.GetLovAsync(listId.Value);
             
         if (!result.Success || result.Data is null)
         {
