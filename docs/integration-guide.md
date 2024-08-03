@@ -22,76 +22,58 @@ builder.Services.AddFormBuilder(options =>
 });
 ```
 
-## Step 3: Add Styles, Scripts, and Required Components
+You can also set optional parameters such as `Theme` and `CacheExpiration`:
+- `Theme`: The theme to use for the Radzen components. The default value is `material`. 
+You can view the [Themes](../src/FormBuilder/Themes.cs) class for available themes.
+- `CacheExpiration`: The expiration time for the form cache. The default value is `30 minutes`.
+By default, the LOV (list of values) API requests are cached.
 
-Include the required styles and scripts in the `index.html` file.
-
-### Add Styles
-
-Add the following styles to the `head` section:
-
-```html
-<link href="_content/FormBuilder/css/app.css" rel="stylesheet" />
+Example:
+```csharp
+builder.Services.AddFormBuilder(options =>
+{
+    options.FormApiHost = "https://localhost:8000";
+    options.Theme = Themes.Standard;
+    options.CacheExpiration = TimeSpan.FromMinutes(15);
+});
 ```
 
-The `app.css` file includes styles for Radzen components and Bootstrap 5.
+## Step 3: Add `<InitComponents />`
 
-Alternatively, you can directly include Radzen styles and Bootstrap in your application:
+Add the `<InitComponents />` component to the layout file to initialize the Radzen components and load static files.
 
-```html
-<link href="_content/Radzen.Blazor/css/standard-base.css" rel="stylesheet" /> <!-- Radzen standard theme -->
-<link href="_content/{YOUR_APPLICATION_NAME}/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-```
-
-### Add Scripts
-
-Add the following scripts to the `body` section:
-
-```html
-<script src="_content/FormBuilder/js/app.js"></script>
-```
-
-The `app.js` file includes scripts for Radzen components.
-
-Alternatively, you can directly include Radzen scripts in your application:
-
-```html
-<script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
-```
-### Add Required Components
-Add the `RadzenComponents` component to the layout file.
-It is used to render Radzen notifications and dialog components.
 For example, add the following code to the `MainLayout.razor` file:
 
 ```html
-<RadzenComponents />
+<InitComponents />
 ```
 
 And don't forget to include namespace in the `_Imports.razor` file:
 
 ```csharp
+@using FormBuilder
 @using FormBuilder.Components
 ```
 
-## Step 4: Use FormEditor Component
+That's it! You have successfully integrated the Blazor FormBuilder with your Blazor application.
 
-Use the `FormEditor` component in your Blazor application to design forms.
-
-Example:
+## Usage FormEditor Component
+The `FormEditor` component is used to design forms. 
+To use the `FormEditor` component, add the following code to the desired page:
 
 ```html
 <FormEditor />
 ```
 
-## Step 5: Use FormRenderer Component
-
-Use the `FormRenderer` component in your Blazor application to render forms.
-
-Example:
+## Usage FormRenderer Component
+The `FormRenderer` component is used to render forms.
+To use the `FormRenderer` component, add the following code to the desired page:
 
 ```html
 <FormRenderer FormId="1" />
 ```
+
+To read more about the `FormRenderer` component, refer to the [Form Renderer Component Reference](form-renderer.md).
 
 ## Sample Application
 

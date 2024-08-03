@@ -7,7 +7,7 @@ You can specify either the `FormId` or `FormJson` property to render a form.
 
 - **`FormId`**: The ID of the form to render. This fetches form data from the API based on the ID.
 - **`FormJson`**: The JSON data of the form to render. This allows you to pass the JSON data of the form directly to the component.
-- **`IsLoadingForm`**: A boolean value indicating whether the form is currently loading and rendering.
+- **`IsLoadingForm`**: A boolean value indicating whether the form is currently loading from API or JSON data.
 
 ## FormRenderer Events
 

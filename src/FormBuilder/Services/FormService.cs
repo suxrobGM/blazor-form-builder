@@ -3,7 +3,7 @@
 /// <summary>
 /// Facade service for form operations.
 /// </summary>
-public class FormService
+internal class FormService
 {
     public FormService(IFormSerializer formSerializer, IFormApi formApi, ILovApi lovApi)
     {

@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
 
@@ -12,10 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="JsonSchema.Net" Version="7.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
-        <PackageReference Include="Radzen.Blazor" Version="4.34.1" />
+        <PackageReference Include="Radzen.Blazor" Version="5.0.6" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,6 +26,10 @@
       <Content Update="wwwroot\formScheme.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\app.js" />
     </ItemGroup>
 
 </Project>
