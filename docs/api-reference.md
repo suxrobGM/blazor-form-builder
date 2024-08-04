@@ -55,6 +55,11 @@ Gets a paged list of forms.
 |------|-------------|
 | 200  | Success     |
 
+Sample request,
+```
+GET /api/forms?OrderBy=formName&Page=1&PageSize=10
+```
+
 Response body example,
 ```json
 {
@@ -65,7 +70,12 @@ Response body example,
     {
       "id": 1,
       "formName": "Form 1",
-      "formDesign": "{JSON Data}",
+      "formDesign": "{JSON Data}"
+    },
+    {
+      "id": 2,
+      "formName": "Form 2",
+      "formDesign": "{JSON Data}"
     }
   ]
 }
@@ -88,7 +98,7 @@ Success response body example,
 {
   "success": true,
   "data": {
-    "id": 1,
+    "id": 1, // Returned form ID
     "formName": "Form 1",
     "formDesign": "{JSON Data}"
   }
@@ -131,6 +141,11 @@ Updates a form by its id.
 | Name | Located in | Description      | Required | Schema |
 |------|------------|------------------|----------|--------|
 | id   | path       | Existing form ID | Yes      | string |
+
+Sample request,
+```
+PUT /api/forms/1
+```
 
 Example request body,
 ```json
@@ -185,6 +200,32 @@ Gets a paged list of List IDs.
 |------|-------------|
 | 200  | Success     |
 
+Sample request,
+```
+GET /api/lov?Page=1&PageSize=10
+```
+
+Response body example,
+```json
+{
+  "success": true,
+  "pageSize": 10,
+  "pagesCount": 1,
+  "data": [
+    {
+      "id": 1,
+      "listId": 1,
+      "listValue": "Value 1"
+    },
+    {
+      "id": 2,
+      "listId": 2,
+      "listValue": "Value 2"
+    }
+  ]
+}
+```
+
 ### POST `/api/lov`
 ##### Summary:
 
@@ -203,6 +244,10 @@ Request body example,
     {
       "listId": 1,
       "listValue": "Value 1"
+    },
+    {
+      "listId": 2,
+      "listValue": "Value 2"
     }
   ]
 }
@@ -225,6 +270,11 @@ Gets list of values filtered by ListId
 |------|-------------|
 | 200  | Success     |
 
+Sample request,
+```
+GET /api/lov/1
+```
+
 Success response body example,
 ```json
 {
@@ -234,12 +284,22 @@ Success response body example,
       "id": 1,
       "listId": 1,
       "listValue": "Value 1"
+    },
+    {
+      "id": 2,
+      "listId": 1,
+      "listValue": "Value 2"
+    },
+    {
+      "id": 3,
+      "listId": 1,
+      "listValue": "Value 3"
     }
   ]
 }
 ```
 
-### POST `/api/lov/batch-delete`
+### POST `/api/lov/delete`
 ##### Summary:
 
 Batch delete list of values

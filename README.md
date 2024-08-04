@@ -76,4 +76,5 @@ Once the projects are running, you can access them via the following URLs:
 ## Documentation
 - **[API Reference](docs/api-reference.md)**: Learn how to use the Form Builder API to create, update, delete, and retrieve forms and LOV data.
 - **[Integration Guide](docs/integration-guide.md)**: Integrate the Blazor Form Builder with your existing Blazor application.
+- **[Form Editor Component Reference](docs/form-editor.md)**: Design forms in your Blazor application using the `FormEditor` component.
 - **[Form Renderer Component Reference](docs/form-renderer.md)**: Render forms in your Blazor application using the `FormRenderer` component.

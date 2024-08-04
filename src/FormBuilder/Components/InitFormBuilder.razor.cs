@@ -7,21 +7,22 @@ namespace FormBuilder.Components;
 /// <summary>
 /// Initializes the overlay Radzen components such as the dialog, notification, and tooltip and loads the static files.
 /// It also sets the theme for the Radzen components.
+/// Use this component only in the layout or root component. For example, in the `MainLayout.razor` file.
 /// </summary>
 [SupportedOSPlatform("browser")]
-public partial class InitComponents : ComponentBase
+public partial class InitFormBuilder : ComponentBase
 {
     [Inject]
     private FormBuilderOptions Options { get; set; } = default!;
     
     protected override async Task OnInitializedAsync()
     {
-        await JSHost.ImportAsync(nameof(InitComponents), 
-            "/_content/FormBuilder/Components/InitComponents.js");
+        await JSHost.ImportAsync(nameof(InitFormBuilder), 
+            "/_content/FormBuilder/Components/InitFormBuilder.js");
 
         LoadStaticFiles();
     }
 
-    [JSImport("loadStaticFiles", nameof(InitComponents))]
+    [JSImport("loadStaticFiles", nameof(InitFormBuilder))]
     internal static partial void LoadStaticFiles();
 }

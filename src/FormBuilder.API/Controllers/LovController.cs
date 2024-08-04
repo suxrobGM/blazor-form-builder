@@ -56,7 +56,7 @@ public class LovController : ControllerBase
     /// <param name="command">
     /// The command containing the list of ListIds to delete
     /// </param>
-    [HttpPost("batch-delete")]
+    [HttpPost("delete")]
     public async Task<ActionResult<Result>> BatchDeleteListOfValues(BatchDeleteLovCommand command)
     {
         var result = await _lovService.DeleteListOfValuesAsync(command);

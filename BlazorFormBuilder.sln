@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{110FAC20-0
 		docs\integration-guide.md = docs\integration-guide.md
 		docs\form-renderer.md = docs\form-renderer.md
 		docs\api-reference.md = docs\api-reference.md
+		docs\form-editor.md = docs\form-editor.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1CF934BD-6E84-458A-8BA9-B35C6CB684D5}"

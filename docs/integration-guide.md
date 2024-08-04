@@ -38,14 +38,14 @@ builder.Services.AddFormBuilder(options =>
 });
 ```
 
-## Step 3: Add `<InitComponents />`
+## Step 3: Add `<InitFormBuilder />`
 
-Add the `<InitComponents />` component to the layout file to initialize the Radzen components and load static files.
+Add the `<InitFormBuilder />` component to the layout file to initialize the Radzen components and load static files.
 
 For example, add the following code to the `MainLayout.razor` file:
 
 ```html
-<InitComponents />
+<InitFormBuilder />
 ```
 
 And don't forget to include namespace in the `_Imports.razor` file:
