@@ -65,6 +65,8 @@ To use the `FormEditor` component, add the following code to the desired page:
 <FormEditor />
 ```
 
+To read more about the `FormEditor` component, refer to the [Form Editor Component Reference](form-editor.md).
+
 ## Usage FormRenderer Component
 The `FormRenderer` component is used to render forms.
 To use the `FormRenderer` component, add the following code to the desired page:
