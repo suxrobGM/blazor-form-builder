@@ -17,11 +17,8 @@ public partial class InitFormBuilder : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-        // Use relative path for GitHub Pages
-        var basePath = Environment.GetEnvironmentVariable("GH_PAGES") == "true" ? "./" : "/"; 
-        
         await JSHost.ImportAsync(nameof(InitFormBuilder), 
-            $"{basePath}_content/FormBuilder/Components/InitFormBuilder.js");
+            "/_content/FormBuilder/Components/InitFormBuilder.js");
 
         LoadStaticFiles();
     }
