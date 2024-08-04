@@ -78,3 +78,8 @@ Once the projects are running, you can access them via the following URLs:
 - **[Integration Guide](docs/integration-guide.md)**: Integrate the Blazor Form Builder with your existing Blazor application.
 - **[Form Editor Component Reference](docs/form-editor.md)**: Design forms in your Blazor application using the `FormEditor` component.
 - **[Form Renderer Component Reference](docs/form-renderer.md)**: Render forms in your Blazor application using the `FormRenderer` component.
+
+## Screenshots
+![Form Designer 1](./docs/img/designer-app-1.jpg?raw=true)
+![Form Designer 2](./docs/img/designer-app-2.jpg?raw=true)
+![Form Renderer](./docs/img/designer-app-3.jpg?raw=true)
